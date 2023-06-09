@@ -1,0 +1,68 @@
+-- Buat Table Transaksi
+CREATE TABLE users (
+	id_user int AUTO_INCREMENT,
+    nama varchar NOT NULL,
+	peran int NOT NULL, 
+
+    PRIMARY KEY(id_user),
+    INDEX(id_user),
+    FOREIGN KEY (idPengguna)
+        REFERENCES Pengguna(idPengguna)
+        ON DELETE CASCADE,
+    FOREIGN KEY (idBaju)
+        REFERENCES Baju(idBaju)
+        ON DELETE CASCADE,
+    FOREIGN KEY (idKurir)
+        REFERENCES Kurir(idKurir)
+        ON DELETE CASCADE,
+    FOREIGN KEY (idAksesoris)
+        REFERENCES Aksesoris(idAksesoris)
+        ON DELETE CASCADE
+);
+
+CREATE TABLE  guru(
+	id_guru int AUTO_INCREMENT, 
+
+
+);
+
+CREATE TABLE  murid(
+	id_murid int AUTO_INCREMENT, 
+	nama_siswa varchar NOT NULL,
+    asal_sekolah varchar NOT NULL, 
+	id_user int AUTO_INCREMENT,
+	id_pendidikan varchar NOT NULL,
+	INDEX(id_user),
+	INDEX(id_pendidikan),
+    FOREIGN KEY (id_user)
+        REFERENCES users(id_user)
+        ON DELETE CASCADE,
+	FOREIGN KEY (id_pendidikan)
+        REFERENCES pendidikan(id_pendidikan)
+        ON DELETE CASCADE,
+);
+
+CREATE TABLE  pendidikan(
+	id_pendidikan int AUTO_INCREMENT, 
+	nama_pendidikan varchar NOT NULL,
+	PRIMARY KEY(id_pendidikan),
+);
+
+
+
+
+CREATE TABLE  kelas(
+	id_kelas int AUTO_INCREMENT, 
+	nama_kelas varchar NOT NULL, 
+	id_guru int AUTO_INCREMENT,
+	id_murid int AUTO_INCREMENT,
+	PRIMARY KEY(id_kelas),
+    INDEX(id_murid),
+	INDEX(id_guru),
+    FOREIGN KEY (id_guru)
+        REFERENCES guru(id_guru)
+        ON DELETE CASCADE,
+    FOREIGN KEY (id_murid)
+        REFERENCES murid(id_murid)
+        ON DELETE CASCADE,
+);
