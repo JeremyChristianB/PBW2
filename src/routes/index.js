@@ -28,4 +28,44 @@ router.get('/signupStudent', notForLoggedIn(), (req, res) => {
   res.render('student/signupStudent');
 });
 
+// Route for the homepageStudent page
+router.get('/homepageStudent', notForLoggedIn(), (req, res) => {
+  res.render('student/homepageStudent');
+});
+
+// Route for the listclassStudent page
+router.get('/listclassStudent', notForLoggedIn(), (req, res) => {
+  res.render('student/listclassStudent');
+});
+
+// Route for the profileStudent page
+router.get('/profileStudent', notForLoggedIn(), (req, res) => {
+  res.render('student/profileStudent');
+});
+
+// Route for the profileStudent page
+router.get('/joinClass', notForLoggedIn(), (req, res) => {
+  res.render('student/joinClass');
+});
+
+
+// Route for the listKelasTeacher page
+router.get('/listClassTeacher', notForLoggedIn(), (req, res) => {
+  res.render('teacher/listClassTeacher');
+});
+
+
+// Route for the openClass page
+router.get('/openClass', notForLoggedIn(), (req, res) => {
+  res.render('teacher/openClass');
+});
+
+// Route for the report page
+router.get('/report', notForLoggedIn(), (req, res) => {
+  res.render('teacher/report');
+});
+
+
+
+
 export default router;

@@ -16,7 +16,7 @@ export const checkAuthentication = (redirectTo = '/login') => (req, res, next) =
 
 export const notForLoggedIn = (redirectTo = '/') => (req, res, next) => {
   if (req.session.auth && req.session.userId) {
-    return res.redirect(301, redirectTo);
+    return res.redirect(redirectTo);
   } else {
     next();
   }
@@ -27,7 +27,7 @@ export const checkAuthorization = (roleId, redirectTo = '/') => (req, res, next)
     next();
   } else {
     if (redirectTo) {
-      return res.redirect(301, redirectTo);
+      return res.redirect(redirectTo);
     }
 
     // Authentication failed
