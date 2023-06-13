@@ -4,24 +4,26 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../public/style.css">
+    <link rel="stylesheet" href="/style/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <title>Home Guru</title>
 </head>
 <body>
     <div class="header">
-        <a href="" class="logo" id="logo">Belajar Online</a>
+        <a href="homepageTeacher" class="logo" id="logo">Belajar Online</a>
         <div class="header-right">
-            <a href="" id="home">List Kelas</a>
-            <a href="bukaKelas.html" id="addclass">Membuka Kelas</a>
-            <a href="" id="laporan">Laporan</a>
+            <a href="listClassTeacher" id="home">List Kelas</a>
+            <a href="openClass" id="addclass">Membuka Kelas</a>
+            <a href="report" id="laporan">Laporan</a>
             <div class="dropdown">
                 <button class="dropbtn"> User 
                     <i class="fa fa-caret-down"></i>
                 </button>
                 <div class="dropdown-content">
-                    <a href="admin-profile.html">Profile</a>
-                    <a href="TUBES.html">Log Out</a>
+                    <a href="profilGuru">Profile</a>
+                    <form action="/account/logout" method="post">
+                        <button type="submit" name="btn_logout">LOGOUT</button>
+                    </form>
                 </div>
             </div>
         </div>
