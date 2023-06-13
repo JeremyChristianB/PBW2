@@ -29,43 +29,50 @@ router.get('/signupStudent', notForLoggedIn(), (req, res) => {
 });
 
 // Route for the homepageStudent page
-router.get('/homepageStudent', notForLoggedIn(), (req, res) => {
+router.get('/homepageStudent', (req, res) => {
   res.render('student/homepageStudent');
 });
 
 // Route for the listclassStudent page
-router.get('/listclassStudent', notForLoggedIn(), (req, res) => {
+router.get('/listclassStudent', (req, res) => {
   res.render('student/listclassStudent');
 });
 
 // Route for the profileStudent page
-router.get('/profileStudent', notForLoggedIn(), (req, res) => {
+router.get('/profileStudent', (req, res) => {
   res.render('student/profileStudent');
 });
 
-// Route for the profileStudent page
-router.get('/joinClass', notForLoggedIn(), (req, res) => {
+// Route for the joinClass page
+router.get('/joinClass', (req, res) => {
   res.render('student/joinClass');
 });
 
 
 // Route for the listKelasTeacher page
-router.get('/listClassTeacher', notForLoggedIn(), (req, res) => {
+router.get('/listClassTeacher', (req, res) => {
   res.render('teacher/listClassTeacher');
 });
 
 
 // Route for the openClass page
-router.get('/openClass', notForLoggedIn(), (req, res) => {
+router.get('/openClass', (req, res) => {
   res.render('teacher/openClass');
 });
 
 // Route for the report page
-router.get('/report', notForLoggedIn(), (req, res) => {
+router.get('/report', (req, res) => {
   res.render('teacher/report');
 });
 
+// Router for the homepageTeacher page
+router.get('/homepageTeacher', (req, res) => {
+  res.render('teacher/homepageTeacher');
+});
 
-
+// Router for the profilTeacher page
+router.get('/profilTeacher', (req, res) => {
+  res.render('teacher/profilTeacher');
+});
 
 export default router;

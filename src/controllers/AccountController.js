@@ -130,6 +130,7 @@ export const logout = async (req, res) => {
   req.session.save(function(err) {
     // session saved
   })    
-  res.redirect('/login');
+  res.redirect('/login'); //kalau ketik account/logout keluarnya ke login lagi
+  //res.redirect('/homepage');
 }
 
