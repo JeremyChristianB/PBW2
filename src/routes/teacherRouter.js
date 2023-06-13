@@ -8,4 +8,9 @@ teacherRoutes.get('/teacher', checkAuthorization(CONSTANT.ROLE.TEACHER), (req, r
   res.render('teacher/homepageTeacher');
 });
 
+teacherRoutes.get('/teacher', checkAuthorization(CONSTANT.ROLE.TEACHER), (req, res) => {
+  res.render('basic/hompage');
+});
+
+
 export default teacherRoutes;
