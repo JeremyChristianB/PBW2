@@ -26,7 +26,7 @@ const createUserQuery = `CREATE TABLE IF NOT EXISTS users (
     role_id INTEGER,
     teacher_id INTEGER,
     CONSTRAINT fk_user_role FOREIGN KEY (role_id) REFERENCES role(id),
-    CONSTRAINT fk_user_teacher FOREIGN KEY (teacher_id) REFERENCES teachers(id)
+    CONSTRAINT fk_user_teacher FOREIGN KEY (teacher_id) REFERENCES teachers(id),
     CONSTRAINT email UNIQUE(email)
 )`;
 
