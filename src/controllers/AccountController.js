@@ -3,10 +3,11 @@ import express from 'express';
 import CONSTANT from '../config/constant.js';
 import { getConnection } from '../config/connection.js';
 import { insertUserData, getUserData } from '../models/user.js'
-import { insertTeacherAccount } from '../models/teacher.js';
+import { insertTeacherAccount, insertClass } from '../models/teacher.js';
 import { insertStudentAccount } from '../models/student.js';
 import { getTeacherDataById } from '../models/teacher.js';
 import { destroySessionAuth, saveSessionAuth} from '../middlewares/session.js';
+
 
 export const signupTeacher = async (req, res) => {
   try {
@@ -52,12 +53,13 @@ export const signupTeacher = async (req, res) => {
 
 export const signupStudent = async (req, res) => {
   try {
-    const { nama, sekolah, number, kelas, email, password} = req.body;
+    const { foto, nama, sekolah, number, kelas, email, password} = req.body;
 
     const hash = bcrypt.hashSync(password, bcrypt.genSaltSync(10));
 
     // Insert student account
     const studentData = {
+      foto: foto,
       full_name: nama,
       sekolah: sekolah, 
       phone_number: number, 
@@ -70,17 +72,18 @@ export const signupStudent = async (req, res) => {
     console.log('student data berhasil di insert', account)
 
 
-    const userData = {
+    const userData2 = {
       email: email, 
       password: hash, 
       role: CONSTANT.ROLE.STUDENT,
       teacher_id: null,
+      student_id: account.insertId
     };
 
-    let insertUser
+    let insertUser2
 
-    insertUser = await insertUserData(userData);
-    console.log('user data student berhasil di insert')
+    insertUser2 = await insertUserData(userData2);
+    console.log('user data student berhasil di insert', insertUser2)
 
     res.redirect('/');
   } catch (err) {
@@ -135,3 +138,29 @@ export const logout = async (req, res) => {
   //res.redirect('/homepage');
 }
 
+export const addClass = async (req, res) => {
+  try {
+    const { namaKelas, Waktu, Tarif, Link, teacher_id, student_id} = req.body;
+
+    // Insert class
+
+    // const id = await getTeacherDataById(teacher_id)
+
+    const classData = {
+      namaKelas: namaKelas,
+      Waktu: Waktu, 
+      Tarif: Tarif, 
+      Link: null,
+      teacher_id: CONSTANT.ROLE.TEACHER,
+      student_id: null
+    };
+
+    Class = await insertClass(classData);
+    console.log('class data berhasil di insert', id)
+
+    res.redirect('/listClass');
+  } catch (err) {
+    console.log(err);
+    res.status(500).send('An error occurred while saving the data');
+  }
+};

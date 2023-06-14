@@ -1,6 +1,7 @@
 import express from 'express';
 import { notForLoggedIn } from '../middlewares/session.js';
 import { showTeacherProfile } from '../models/teacher.js';
+import { showStudentProfile } from '../models/student.js';
 
 const router = express.Router();
 
@@ -76,8 +77,13 @@ router.get('/profilTeacher', showTeacherProfile, (req, res) => {
   res.render('teacher/profilTeacher', {data: res.locals.dataUser[0]});
 });
 
+// Router for the profileStudent page
+router.get('/profileStudent', showStudentProfile, (req, res) => {
+  res.render('student/profileStudent', {data: res.locals.dataUser[0]});
+});
+
 //editClass
-router.get('/editClass', (req, res) => {
+router.get('/editClass',(req, res) => {
   res.render('teacher/editClass');
 });
 export default router;

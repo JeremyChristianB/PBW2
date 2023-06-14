@@ -17,3 +17,31 @@ export const insertStudentAccount = async (params) => {
     throw new Error(`Error inserting student account: ${error}`);
   }
 };
+
+export const getStudentDataById = async (student_id) => {
+  const sql = "SELECT * FROM students WHERE id = ?";
+
+  const [rows] = await pool.promise().query(sql, [student_id]);
+  return rows;
+};
+
+export const showStudentProfile = (req, res, next) => {
+  //const sql = "SELECT * FROM students WHERE id = ?";
+  let id = req.session.userId;
+  
+  const query = 'SELECT * FROM students JOIN users ON users.student_id = students.id WHERE users.id =' + id ;
+
+  return new Promise(async (resolve) => {
+    pool.execute(query, [id])
+    .then((data) => {
+      //untuk passing data antar middleware
+      res.locals.dataUser = data?.[0]
+      //console.log(res.locals.dataUser)
+      next();
+    })
+    .catch(() => {
+      res.locals.dataUser = data?.[0]
+      next();
+    })
+  })
+};

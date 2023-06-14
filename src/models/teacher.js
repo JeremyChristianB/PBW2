@@ -64,6 +64,24 @@ export const showTeacherProfile = (req, res, next) => {
 // };
 
 
+export const insertClass = async (params) => {
+  const { namaKelas, Waktu, Tarif, Link, teacher_id, student_id } = params;
+
+  if (!namaKelas || !Waktu || !Tarif || !Link ||!teacher_id || !student_id) {
+    throw new Error('Missing required parameters for inserting class');
+  }
+
+  const sql = "INSERT INTO  class(namaKelas, Waktu, Tarif, teacher_id, student_id) VALUES (?, ?, ?, ?, ?)";
+  const values = [namaKelas, Waktu, Tarif, Link, teacher_id, student_id];
+
+  try {
+    const [result] = await pool.execute(sql, values);
+    return result;
+  } catch (error) {
+    throw new Error(`Error inserting class: ${error}`);
+  }
+};
+
 
 
 

@@ -1,15 +1,15 @@
 import { pool } from '../config/connection.js';
 
 export const insertUserData = async (params) => {
-  const { email, password, role, teacher_id } = params;
+  const { email, password, role, teacher_id, student_id} = params;
 
   //console.log(params)
   // if (!email || !password || !role_id || !teacher_id) {
   //   throw new Error('Missing required parameters for inserting user account');
   // }
 
-  const sql = "INSERT INTO users(email, password, role_id, teacher_id) VALUES (?, ?, ?, ?)";
-  const values = [email, password, role, teacher_id];
+  const sql = "INSERT INTO users(email, password, role_id, teacher_id, student_id) VALUES (?, ?, ?, ?, ?)";
+  const values = [email, password, role, teacher_id, student_id];
 
   console.log('data sedang dimasukkan')
   

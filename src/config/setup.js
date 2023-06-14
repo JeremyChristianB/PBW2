@@ -4,6 +4,8 @@ const dropTeacherQuery = `DROP TABLE IF EXISTS teachers CASCADE`;
 const dropUserQuery = `DROP TABLE IF EXISTS users CASCADE`;
 const dropRoleQuery = `DROP TABLE IF EXISTS role CASCADE`;
 const dropStudentQuery = `DROP TABLE IF EXISTS students CASCADE`;
+const dropTeacherClassQuery = `DROP TABLE IF EXISTS  class CASCADE`;
+
 
 const createTeacherQuery = `CREATE TABLE IF NOT EXISTS teachers (
     id INTEGER AUTO_INCREMENT PRIMARY KEY,
@@ -26,17 +28,32 @@ const createUserQuery = `CREATE TABLE IF NOT EXISTS users (
     password VARCHAR(150),
     role_id INTEGER,
     teacher_id INTEGER,
+    student_id INTEGER,
     CONSTRAINT fk_user_role FOREIGN KEY (role_id) REFERENCES role(id),
     CONSTRAINT fk_user_teacher FOREIGN KEY (teacher_id) REFERENCES teachers(id),
+    CONSTRAINT fk_user_student FOREIGN KEY (student_id) REFERENCES students(id),
     CONSTRAINT email UNIQUE(email)
 )`;
 
 const createStudentQuery = `CREATE TABLE IF NOT EXISTS students (
   id INTEGER AUTO_INCREMENT PRIMARY KEY,
+  foto LONGBLOB,
   full_name VARCHAR(255),
   sekolah VARCHAR(255),
   phone_number VARCHAR(20),
   kelas VARCHAR(20)
+)`;
+
+const createTeacherClass = `CREATE TABLE IF NOT EXISTS class (
+  id INTEGER AUTO_INCREMENT PRIMARY KEY,
+  namaKelas VARCHAR(255),
+  Waktu VARCHAR(255),
+  Tarif VARCHAR(20),
+  Link VARCHAR(20),
+  teacher_id INTEGER,
+  student_id INTEGER,
+  CONSTRAINT fk_class_teacher FOREIGN KEY (teacher_id) REFERENCES teachers(id),
+  CONSTRAINT fk_class_student FOREIGN KEY (student_id) REFERENCES students(id)
 )`;
 
 const executeQuery = async (query) => {
@@ -55,6 +72,7 @@ const createTables = async () => {
     await executeQuery(dropTeacherQuery);
     await executeQuery(dropStudentQuery);
     await executeQuery(dropRoleQuery);
+    await executeQuery(dropTeacherClassQuery);
 
     await executeQuery(createRoleQuery);
     console.log('---- Role table created');
@@ -68,6 +86,9 @@ const createTables = async () => {
 
     await executeQuery(createUserQuery);
     console.log('---- Users table created');
+
+    await executeQuery(createTeacherClass);
+    console.log('---- TeacherClass table created');
 
     console.log('---- DATABASE CREATED');
     console.log('====================================');

@@ -22,7 +22,7 @@
                 </button>
                 <div class="dropdown-content">
                     <a href="profileStudent">Profile</a>
-                    <a href="../homepage">Log Out</a>
+                    <a href="homepage">Log Out</a>
                 </div>
             </div>
         </div>
@@ -30,11 +30,13 @@
     <div class="main">
         <div class="card">
             <img src="images/avatar.jpg" alt="Avatar">
-            <h2>John Doe</h2>
-            <p>johndoe@gmail.com</p>
-            <p>johndoe</p>
-            <p>SMAN 5 Bandung</p>
-            <p>Kelas 11</p>
+            <br>
+            <strong></strong> <%= data.foto %><br>
+            <strong>Name:</strong> <%= data.full_name %><br>
+            <strong>Email:</strong> <%= data.email %><br>
+            <strong>Phone number:</strong> <%= data.phone_number %><br>
+            <strong>Sekolah:</strong> <%= data.sekolah %><br>
+            <strong>Kelas:</strong> <%= data.kelas %><br>
             <p><button class="profilebtn" id="profilebtn">Edit Profile</button></p>
           </div>
     </div>
