@@ -75,4 +75,8 @@ router.get('/profilTeacher', (req, res) => {
   res.render('teacher/profilTeacher');
 });
 
+//editClass
+router.get('/editClass', (req, res) => {
+  res.render('teacher/editClass');
+});
 export default router;

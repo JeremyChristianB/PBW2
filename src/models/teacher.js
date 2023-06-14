@@ -25,5 +25,12 @@ export const getTeacherDataById = async (teacher_id) => {
   return rows;
 };
 
+export const showTeacherProfile = async (params) => {
+  const query = 'SELECT * FROM teachers INNER JOIN users ON users.teacher_id = teachers.id';
+
+  const[rows] = await pool.promise().query(sql, [params]);
+  return rows;
+};
+
 
 
