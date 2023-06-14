@@ -11,7 +11,7 @@ import { destroySessionAuth, saveSessionAuth} from '../middlewares/session.js';
 
 export const signupTeacher = async (req, res) => {
   try {
-    const { foto, nama, address, number, materi, tarif, email, password} = req.body;
+    const { foto, nama, address, number, materi, tarif, email, password, course_id} = req.body;
 
     const hash = bcrypt.hashSync(password, bcrypt.genSaltSync(10));
 
@@ -23,6 +23,7 @@ export const signupTeacher = async (req, res) => {
       phone_number: number, 
       expertise: materi,
       rate: tarif,
+      
     };
 
     let account
@@ -53,7 +54,7 @@ export const signupTeacher = async (req, res) => {
 
 export const signupStudent = async (req, res) => {
   try {
-    const { foto, nama, sekolah, number, kelas, email, password} = req.body;
+    const { foto, nama, school, number, level, email, password} = req.body;
 
     const hash = bcrypt.hashSync(password, bcrypt.genSaltSync(10));
 
@@ -61,9 +62,9 @@ export const signupStudent = async (req, res) => {
     const studentData = {
       foto: foto,
       full_name: nama,
-      sekolah: sekolah, 
+      school: school, 
       phone_number: number, 
-      kelas: kelas,
+      level: level,
     };
 
     let account

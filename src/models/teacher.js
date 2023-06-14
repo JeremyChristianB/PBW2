@@ -1,14 +1,14 @@
 import { pool } from '../config/connection.js';
 
 export const insertTeacherAccount = async (params) => {
-  const { full_name, address, phone_number, expertise, rate } = params;
+  const { full_name, address, phone_number, expertise, rate, course_id} = params;
 
-  if (!full_name || !address || !phone_number || !expertise || !rate) {
+  if (!full_name || !address || !phone_number || !expertise || !rate || !course_id) {
     throw new Error('Missing required parameters for inserting teacher account');
   }
 
-  const sql = "INSERT INTO teachers (full_name, address, phone_number, expertise, rate) VALUES (?, ?, ?, ?, ?)";
-  const values = [full_name, address, phone_number, expertise, rate];
+  const sql = "INSERT INTO teachers (full_name, address, phone_number, expertise, rate, course_id) VALUES (?, ?, ?, ?, ?, ?)";
+  const values = [full_name, address, phone_number, expertise, rate, course_id];
 
   try {
     const [result] = await pool.execute(sql, values);
