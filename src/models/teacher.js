@@ -25,12 +25,43 @@ export const getTeacherDataById = async (teacher_id) => {
   return rows;
 };
 
-export const showTeacherProfile = async (params) => {
-  const query = 'SELECT * FROM teachers INNER JOIN users ON users.teacher_id = teachers.id';
+//untuk menampilkan profile dari guru
+// export const showTeacherProfile = async (params) => {
+//   //const query = 'SELECT * FROM teachers JOIN users ON users.teacher_id = teachers.id';
+//   const query = 'SELECT * FROM teachers WHERE id = ?';
 
-  const[rows] = await pool.promise().query(sql, [params]);
-  return rows;
-};
+//   const[rows] = await pool.promise().query(sql, [params]);
+//   return rows;
+// };
+
+// export const showTeacherProfile = (id) => {
+//   //const sql = "SELECT * FROM teachers WHERE id = ?";
+//   const query = 'SELECT * FROM teachers JOIN users ON users.teacher_id = teachers.id';
+
+//   return new Promise(async (resolve) => {
+//     pool.execute(query, [id])
+//     .then((data) => {
+//       if (data?.[0]) {
+//         resolve(data[0]?.[0])
+//       } else {
+//         resolve(null);
+//       }
+//     })
+//     .catch(() => {
+//       resolve(null);
+//     })
+//   })
+// };
+
+//untuk edit profile guru
+// export const updateTeacherProfile = async (params) => {
+//   const query = 'UPDATE teachers SET full_name = ?, address = ?, phone_number = ?, expertise = ?, rate = ? WHERE id = ?';
+
+//   const[rows] = await pool.promise().query(sql, [params]);
+//   return rows;
+// };
+
+
 
 
 
