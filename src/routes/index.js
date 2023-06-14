@@ -1,5 +1,6 @@
 import express from 'express';
 import { notForLoggedIn } from '../middlewares/session.js';
+import { showTeacherProfile } from '../models/teacher.js';
 
 const router = express.Router();
 
@@ -71,8 +72,8 @@ router.get('/homepageTeacher', (req, res) => {
 });
 
 // Router for the profilTeacher page
-router.get('/profilTeacher', (req, res) => {
-  res.render('teacher/profilTeacher');
+router.get('/profilTeacher', showTeacherProfile, (req, res) => {
+  res.render('teacher/profilTeacher', {data: res.locals.dataUser[0]});
 });
 
 //editClass

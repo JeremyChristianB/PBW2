@@ -7,6 +7,7 @@ const dropStudentQuery = `DROP TABLE IF EXISTS students CASCADE`;
 
 const createTeacherQuery = `CREATE TABLE IF NOT EXISTS teachers (
     id INTEGER AUTO_INCREMENT PRIMARY KEY,
+    foto LONGBLOB,
     full_name VARCHAR(255),
     address VARCHAR(255),
     phone_number VARCHAR(20),

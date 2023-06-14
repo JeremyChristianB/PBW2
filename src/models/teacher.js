@@ -34,24 +34,26 @@ export const getTeacherDataById = async (teacher_id) => {
 //   return rows;
 // };
 
-// export const showTeacherProfile = (id) => {
-//   //const sql = "SELECT * FROM teachers WHERE id = ?";
-//   const query = 'SELECT * FROM teachers JOIN users ON users.teacher_id = teachers.id';
+export const showTeacherProfile = (req, res, next) => {
+  //const sql = "SELECT * FROM teachers WHERE id = ?";
+  let id = req.session.userId;
+  
+  const query = 'SELECT * FROM teachers JOIN users ON users.teacher_id = teachers.id WHERE users.id =' + id ;
 
-//   return new Promise(async (resolve) => {
-//     pool.execute(query, [id])
-//     .then((data) => {
-//       if (data?.[0]) {
-//         resolve(data[0]?.[0])
-//       } else {
-//         resolve(null);
-//       }
-//     })
-//     .catch(() => {
-//       resolve(null);
-//     })
-//   })
-// };
+  return new Promise(async (resolve) => {
+    pool.execute(query, [id])
+    .then((data) => {
+      //untuk passing data antar middleware
+      res.locals.dataUser = data?.[0]
+      //console.log(res.locals.dataUser)
+      next();
+    })
+    .catch(() => {
+      res.locals.dataUser = data?.[0]
+      next();
+    })
+  })
+};
 
 //untuk edit profile guru
 // export const updateTeacherProfile = async (params) => {

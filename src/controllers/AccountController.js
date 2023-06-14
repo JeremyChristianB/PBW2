@@ -10,12 +10,13 @@ import { destroySessionAuth, saveSessionAuth} from '../middlewares/session.js';
 
 export const signupTeacher = async (req, res) => {
   try {
-    const { nama, address, number, materi, tarif, email, password} = req.body;
+    const { foto, nama, address, number, materi, tarif, email, password} = req.body;
 
     const hash = bcrypt.hashSync(password, bcrypt.genSaltSync(10));
 
     // Insert teacher account
     const teacherData = {
+      foto: foto,
       full_name: nama,
       address: address, 
       phone_number: number, 
