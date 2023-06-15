@@ -3,29 +3,30 @@ import express from 'express';
 import CONSTANT from '../config/constant.js';
 import { getConnection } from '../config/connection.js';
 import { insertUserData, getUserData } from '../models/user.js'
-import { insertTeacherAccount, insertClass } from '../models/teacher.js';
+import { insertTeacherAccount} from '../models/teacher.js';
 import { insertStudentAccount } from '../models/student.js';
 import { getTeacherDataById } from '../models/teacher.js';
 import { destroySessionAuth, saveSessionAuth} from '../middlewares/session.js';
-
+import { insertCourse } from '../models/course.js'
 
 export const signupTeacher = async (req, res) => {
   try {
-    const { foto, nama, address, number, materi, tarif, email, password, course_id} = req.body;
+    const { photo , nama, address, number, materi, tarif, email, password, course_id} = req.body;
 
     const hash = bcrypt.hashSync(password, bcrypt.genSaltSync(10));
 
     // Insert teacher account
     const teacherData = {
-      foto: foto,
+      photo:1,
       full_name: nama,
       address: address, 
       phone_number: number, 
       expertise: materi,
       rate: tarif,
-      
-    };
+      course_id: null
 
+    };
+    console.log(teacherData)
     let account
 
     account = await insertTeacherAccount(teacherData);
@@ -37,6 +38,7 @@ export const signupTeacher = async (req, res) => {
       password: hash, 
       role: CONSTANT.ROLE.TEACHER,
       teacher_id: account.insertId,
+      student_id: null
     };
 
     let insertUser
@@ -54,19 +56,18 @@ export const signupTeacher = async (req, res) => {
 
 export const signupStudent = async (req, res) => {
   try {
-    const { foto, nama, school, number, level, email, password} = req.body;
-
+    const { photo, nama, school, number, level, email, password} = req.body;
     const hash = bcrypt.hashSync(password, bcrypt.genSaltSync(10));
 
     // Insert student account
     const studentData = {
-      foto: foto,
+      photo: 1,
       full_name: nama,
-      school: school, 
+      school: null, 
       phone_number: number, 
-      level: level,
+      level: 2,
     };
-
+  console.log(studentData)
     let account
 
     account = await insertStudentAccount(studentData);

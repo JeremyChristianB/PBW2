@@ -1,14 +1,14 @@
 import { pool } from '../config/connection.js';
 
 export const insertTeacherAccount = async (params) => {
-  const { full_name, address, phone_number, expertise, rate, course_id} = params;
+  const { photo, full_name, address, phone_number, expertise, rate, course_id } = params;
 
-  if (!full_name || !address || !phone_number || !expertise || !rate || !course_id) {
-    throw new Error('Missing required parameters for inserting teacher account');
-  }
+  // if (!photo || !full_name || !address || !phone_number || !expertise || !rate || !course_id) {
+  //   throw new Error('Missing required parameters for inserting teacher account');
+  // }
 
-  const sql = "INSERT INTO teachers (full_name, address, phone_number, expertise, rate, course_id) VALUES (?, ?, ?, ?, ?, ?)";
-  const values = [full_name, address, phone_number, expertise, rate, course_id];
+  const sql = "INSERT INTO teachers (photo, full_name, address, phone_number, expertise, rate, course_id) VALUES (?, ?, ?, ?, ?, ?, ?)";
+  const values = [photo, full_name, address, phone_number, expertise, rate, course_id];
 
   try {
     const [result] = await pool.execute(sql, values);
@@ -17,6 +17,7 @@ export const insertTeacherAccount = async (params) => {
     throw new Error(`Error inserting teacher account: ${error}`);
   }
 };
+
 
 export const getTeacherDataById = async (teacher_id) => {
   const sql = "SELECT * FROM teachers WHERE id = ?";

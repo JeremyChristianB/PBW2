@@ -1,14 +1,15 @@
 import { pool } from '../config/connection.js';
 
 export const insertStudentAccount = async (params) => {
-  const { full_name, sekolah, phone_number, kelas } = params;
+  const { photo, full_name, school, phone_number, level } = params;
 
-  if (!full_name || !sekolah || !phone_number || !kelas) {
-    throw new Error('Missing required parameters for inserting student account');
-  }
+  // if (!photo, !full_name || !school || !phone_number || !level) {
+  //   throw new Error('Missing required parameters for inserting student account');
+  // }
 
-  const sql = "INSERT INTO students (full_name, sekolah, phone_number, kelas) VALUES (?, ?, ?, ?)";
-  const values = [full_name, sekolah, phone_number, kelas];
+
+  const sql = "INSERT INTO students (photo, full_name, school, phone_number, level) VALUES (?, ?, ?, ?, ?)";
+  const values = [photo, full_name, school, phone_number, level];
 
   try {
     const [result] = await pool.execute(sql, values);

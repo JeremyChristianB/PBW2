@@ -113,7 +113,7 @@ const createTables = async () => {
     console.log('---- Role table created');
 
     await executeQuery(createCourse);
-    console.log('---- createCourse table created');
+    console.log('---- Courses table created');
 
     await executeQuery(createTeacherQuery);
     console.log('====================================');
