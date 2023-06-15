@@ -9,6 +9,21 @@ import { getTeacherDataById } from '../models/teacher.js';
 import { destroySessionAuth, saveSessionAuth} from '../middlewares/session.js';
 import { insertCourse } from '../models/course.js'
 
+// import multer from 'multer';
+
+// // Untuk handle file upload menggunakan library multer
+// export const upload = multer({
+//     storage: multer.diskStorage({
+//         destination: (req, file, cb) => {
+//             cb(null, 'public/uploads/')
+//         },
+//         filename: (req, file, cb) => {
+//             const unique = Date.now();
+//             cb(null, `${file.fieldname}_${unique}_${file.originalname.slice(file.originalname.length-5)}`);
+//         }
+//     })
+// });
+
 export const signupTeacher = async (req, res) => {
   try {
     const { photo , nama, address, number, materi, tarif, email, password, course_id} = req.body;
@@ -58,14 +73,15 @@ export const signupStudent = async (req, res) => {
   try {
     const { photo, nama, school, number, level, email, password} = req.body;
     const hash = bcrypt.hashSync(password, bcrypt.genSaltSync(10));
-
+    // const img = req.file.filename;
+    console.log(req.file)
     // Insert student account
     const studentData = {
       photo: 1,
       full_name: nama,
-      school: null, 
+      school: school, 
       phone_number: number, 
-      level: 2,
+      level: level,
     };
   console.log(studentData)
     let account
@@ -142,19 +158,15 @@ export const logout = async (req, res) => {
 
 export const addClass = async (req, res) => {
   try {
-    const { namaKelas, Waktu, Tarif, Link, teacher_id, student_id} = req.body;
+    const { nama } = req.body;
 
     // Insert class
 
     // const id = await getTeacherDataById(teacher_id)
 
     const classData = {
-      namaKelas: namaKelas,
-      Waktu: Waktu, 
-      Tarif: Tarif, 
-      Link: null,
-      teacher_id: CONSTANT.ROLE.TEACHER,
-      student_id: null
+      nama: nama,
+
     };
 
     Class = await insertClass(classData);
