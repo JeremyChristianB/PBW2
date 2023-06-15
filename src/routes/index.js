@@ -95,7 +95,7 @@ router.get('/profilTeacher', showTeacherProfile, (req, res) => {
 
 // Router for the profileStudent page
 router.get('/profileStudent', showStudentProfile, (req, res) => {
-  res.render('student/profileStudent', {data: res.locals.dataUser[0]});
+  res.render('student/profileStudent', {data: res.locals.dataUser2[0]});
 });
 
 //editClass
