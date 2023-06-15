@@ -36,12 +36,12 @@ export const showStudentProfile = (req, res, next) => {
     pool.execute(query, [id])
     .then((data) => {
       //untuk passing data antar middleware
-      res.locals.dataUser2 = data?.[0]
-      console.log(res.locals.dataUser2)
+      res.locals.dataUser = data?.[0]
+      //console.log(res.locals.dataUser)
       next();
     })
     .catch(() => {
-      res.locals.dataUser2 = data?.[0]
+      res.locals.dataUser = data?.[0]
       next();
     })
   })
