@@ -8,6 +8,8 @@ import { insertStudentAccount } from '../models/student.js';
 import { getTeacherDataById } from '../models/teacher.js';
 import { destroySessionAuth, saveSessionAuth} from '../middlewares/session.js';
 import { insertCourse } from '../models/course.js'
+// import { } from '../models/courseAvailability.js'
+// import { } from '../models/courseMeetings.js'
 
 // import multer from 'multer';
 
@@ -158,7 +160,7 @@ export const logout = async (req, res) => {
 
 export const addClass = async (req, res) => {
   try {
-    const { nama,  namaguru, waktu, tarif, status } = req.body;
+    const { nama, namakelas, waktu, tarif, status } = req.body;
 
     // Insert class
 
@@ -171,6 +173,10 @@ export const addClass = async (req, res) => {
 
     Class = await insertClass(classData);
     console.log('class data berhasil di insert', id)
+
+    const namaguru = await getTeacherDataById(full_name)
+
+
 
     res.redirect('/listClass');
   } catch (err) {
