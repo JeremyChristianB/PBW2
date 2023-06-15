@@ -64,6 +64,24 @@ export const showTeacherProfile = (req, res, next) => {
 //   return rows;
 // };
 
+export const getTeacherData = (email) => {
+  const sql = "SELECT * FROM teachers WHERE full_name = ?";
+
+  return new Promise(async (resolve) => {
+    pool.execute(sql, [email])
+    .then((data) => {
+      if (data?.[0]) {
+        resolve(data[0]?.[0])
+      } else {
+        resolve(null);
+      }
+    })
+    .catch(() => {
+      resolve(null);
+    })
+  })
+};
+
 
 export const insertClass = async (params) => {
   const { namaKelas, Waktu, Tarif, Link, teacher_id, student_id } = params;

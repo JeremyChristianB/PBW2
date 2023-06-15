@@ -158,7 +158,7 @@ export const logout = async (req, res) => {
 
 export const addClass = async (req, res) => {
   try {
-    const { nama } = req.body;
+    const { nama,  namaguru, waktu, tarif, status } = req.body;
 
     // Insert class
 
