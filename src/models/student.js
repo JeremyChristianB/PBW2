@@ -38,10 +38,13 @@ export const showStudentProfile = (req, res, next) => {
       //untuk passing data antar middleware
       res.locals.dataUser = data?.[0]
       //console.log(res.locals.dataUser)
+      res.locals.dataUser2 = data?.[0]
+      console.log(res.locals.dataUser2)
       next();
     })
     .catch(() => {
       res.locals.dataUser = data?.[0]
+      res.locals.dataUser2 = data?.[0]
       next();
     })
   })
