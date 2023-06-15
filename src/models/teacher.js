@@ -26,6 +26,15 @@ export const getTeacherDataById = async (teacher_id) => {
   return rows;
 };
 
+//untuk menampilkan profile dari guru
+// export const showTeacherProfile = async (params) => {
+//   //const query = 'SELECT * FROM teachers JOIN users ON users.teacher_id = teachers.id';
+//   const query = 'SELECT * FROM teachers WHERE id = ?';
+
+//   const[rows] = await pool.promise().query(sql, [params]);
+//   return rows;
+// };
+
 export const showTeacherProfile = (req, res, next) => {
   //const sql = "SELECT * FROM teachers WHERE id = ?";
   let id = req.session.userId;
@@ -46,6 +55,33 @@ export const showTeacherProfile = (req, res, next) => {
     })
   })
 };
+
+//untuk edit profile guru
+// export const updateTeacherProfile = async (params) => {
+//   const query = 'UPDATE teachers SET full_name = ?, address = ?, phone_number = ?, expertise = ?, rate = ? WHERE id = ?';
+
+//   const[rows] = await pool.promise().query(sql, [params]);
+//   return rows;
+// };
+
+export const getTeacherData = (email) => {
+  const sql = "SELECT * FROM teachers WHERE full_name = ?";
+
+  return new Promise(async (resolve) => {
+    pool.execute(sql, [email])
+    .then((data) => {
+      if (data?.[0]) {
+        resolve(data[0]?.[0])
+      } else {
+        resolve(null);
+      }
+    })
+    .catch(() => {
+      resolve(null);
+    })
+  })
+};
+
 
 export const insertClass = async (params) => {
   const { namaKelas, Waktu, Tarif, Link, teacher_id, student_id } = params;
