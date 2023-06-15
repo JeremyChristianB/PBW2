@@ -5,22 +5,6 @@ import { showStudentProfile } from '../models/student.js';
 
 const router = express.Router();
 
-import multer from 'multer';
-
-// Untuk handle file upload menggunakan library multer
-const upload = multer({
-    storage: multer.diskStorage({
-        destination: (req, file, cb) => {
-            cb(null, '/public/uploads/')
-        },
-        filename: (req, file, cb) => {
-            const unique = Date.now();
-            cb(null, `${file.fieldname}_${unique}_${file.originalname.slice(file.originalname.length-5)}`);
-        }
-    })
-});
-
-
 // Route for the home page
 router.get('/', (req, res) => {
   res.render('basic/homepage');
@@ -95,7 +79,7 @@ router.get('/profilTeacher', showTeacherProfile, (req, res) => {
 
 // Router for the profileStudent page
 router.get('/profileStudent', showStudentProfile, (req, res) => {
-  res.render('student/profileStudent', {data: res.locals.dataUser[0]});
+  res.render('student/profileStudent', {data: res.locals.dataUser2[0]});
 });
 
 //editClass
