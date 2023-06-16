@@ -1,0 +1,66 @@
+<!-- informasi guru yang diinputkan oleh guru pada saat daftar menjadi guru -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/style/profile.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <title>Edit Profile</title>
+</head>
+<body>
+    <div class="header">
+        <a href="homepageTeacher" class="logo" id="logo">Belajar Online</a>
+        <div class="header-right">
+            <a href="listClassTeacher" id="home">List Kelas</a>
+            <a href="openClass" id="course">Membuka Kelas</a>
+            <a href="report" id="course">Laporan</a>
+            <div class="dropdown">
+                <button class="dropbtn">  User
+                    <i class="fa fa-caret-down"></i>
+                </button>
+                <div class="dropdown-content">
+                    <a href="profileTeacher">Profile</a>
+                    <a href="/account/logout">Log Out</a>
+                </div>
+            </div>  
+        </div>
+    </div>
+    <div class="main">
+        <div class="card">
+            <img src="/uploads/<%= data.photo %>" alt="Avatar">
+            <br>
+            <form action="/teachers/edit" id="editProfile" method="post">
+                <input name="teacher_id" type="hidden" value="<%= data.teacher_id %>" readonly>
+                <strong>Name:</strong> <input name="full_name" type="text" value="<%= data.full_name %>" readonly><br>
+                <strong>Email:</strong> <input name="email" type="text" value="<%= data.email %>" readonly><br>
+                <strong>Address:</strong> <input name="address" type="text" value="<%= data.address %>"> <br>
+                <strong>Phone number:</strong> <input name="phone_number" type="text" value="<%= data.phone_number %>" readonly><br>
+                <strong>Expertise:</strong> <input name="expertise" type="text" value="<%= data.expertise %>" readonly><br>
+                <strong>Rate:</strong> <input name="rate" type="text" value="<%= data.rate %>" readonly><br>
+                <p><button hidden id="buttonSave">Simpan Perubahan</button></p>
+                <p><button hidden type="button" id="buttonCancel" onclick="toggleEdit()">Cancel</button></p>
+            </form>
+            <p><button onclick="toggleEdit()" class="profilebtn" id="profilebtn">Edit Profile</button></p>
+          </div>
+    </div>
+</body>
+<script>
+    function toggleEdit(){
+        var form = document.getElementById("editProfile");
+        var elements = form.elements;
+        for (var i = 0, len = elements.length; i < len; ++i) {
+            elements[i].readOnly = !elements[i].readOnly;
+        }
+        var buttonCancel = document.getElementById("buttonCancel");
+        var buttonSave = document.getElementById("buttonSave");
+        buttonCancel.hidden = !buttonCancel.hidden;
+        buttonSave.hidden = !buttonSave.hidden;
+        //var buttonEdit = document.getElementById("profilebtn");
+        //buttonEdit.hidden = !buttonEdit.hidden;
+    };
+</script>
+
+</html>
