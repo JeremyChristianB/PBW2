@@ -28,13 +28,14 @@ import { insertCourse } from '../models/course.js'
 
 export const signupTeacher = async (req, res) => {
   try {
-    const { photo , nama, address, number, materi, tarif, email, password, course_id} = req.body;
+    const { nama, address, number, materi, tarif, email, password, course_id} = req.body;
 
     const hash = bcrypt.hashSync(password, bcrypt.genSaltSync(10));
-
+    const img = req.file;
+    console.log(req.file)
     // Insert teacher account
     const teacherData = {
-      photo:1,
+      photo: img.filename,
       full_name: nama,
       address: address, 
       phone_number: number, 
@@ -76,7 +77,7 @@ export const signupStudent = async (req, res) => {
     const { nama, school, number, level, email, password} = req.body;
     const hash = bcrypt.hashSync(password, bcrypt.genSaltSync(10));
     const img = req.file;
-    // console.log(req.file)
+    console.log(req.file)
     // Insert student account
     const studentData = {
       photo: img.filename,

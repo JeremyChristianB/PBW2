@@ -9,7 +9,7 @@ export const insertTeacherAccount = async (params) => {
 
   const sql = "INSERT INTO teachers (photo, full_name, address, phone_number, expertise, rate, course_id) VALUES (?, ?, ?, ?, ?, ?, ?)";
   const values = [photo, full_name, address, phone_number, expertise, rate, course_id];
-
+  
   try {
     const [result] = await pool.execute(sql, values);
     return result;
@@ -45,12 +45,13 @@ export const showTeacherProfile = (req, res, next) => {
     pool.execute(query, [id])
     .then((data) => {
       //untuk passing data antar middleware
+      
+      console.log(data?.[0])
       res.locals.dataUser = data?.[0]
-      //console.log(res.locals.dataUser)
       next();
     })
     .catch(() => {
-      //res.locals.dataUser = data?.[0]
+      //res.locals.dataUser2 = data?.[0]
       next();
     })
   })

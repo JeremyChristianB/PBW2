@@ -2,7 +2,6 @@ import express from 'express';
 import { notForLoggedIn } from '../middlewares/session.js';
 import { showTeacherProfile } from '../models/teacher.js';
 import { showStudentProfile } from '../models/student.js';
-import { updateStudentProfile } from '../models/student.js';
 
 const router = express.Router();
 
@@ -74,19 +73,12 @@ router.get('/profilTeacher', showTeacherProfile, (req, res) => {
   res.render('teacher/profilTeacher', {data: res.locals.dataUser[0]});
 });
 
-//Router for update profilTeacher page
-
 // Router for the profileStudent page
 router.get('/profileStudent', showStudentProfile, (req, res) => {
   // console.log(res.locals.dataUser2);
   res.render('student/profileStudent', {data: res.locals.dataUser2[0]});
 
 });
-
-//Router for update profileStudent page
-router.post('/profileStudent', updateStudentProfile, (req, res) => {
-
-}); 
 
 //editClass
 router.get('/editClass',(req, res) => {
