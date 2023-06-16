@@ -68,9 +68,9 @@ router.get('/homepageTeacher', (req, res) => {
   res.render('teacher/homepageTeacher');
 });
 
-// Router for the profilTeacher page
-router.get('/profilTeacher', showTeacherProfile, (req, res) => {
-  res.render('teacher/profilTeacher', {data: res.locals.dataUser[0]});
+// Router for the profileTeacher page
+router.get('/profileTeacher', showTeacherProfile, (req, res) => {
+  res.render('teacher/profileTeacher', {data: res.locals.dataUser[0]});
 });
 
 // Router for the profileStudent page
