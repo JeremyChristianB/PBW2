@@ -50,7 +50,7 @@ export const showTeacherProfile = (req, res, next) => {
       next();
     })
     .catch(() => {
-      res.locals.dataUser = data?.[0]
+      //res.locals.dataUser = data?.[0]
       next();
     })
   })

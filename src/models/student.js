@@ -19,7 +19,7 @@ export const insertStudentAccount = async (params) => {
   }
 };
 
-export const getStudentDataById = async (student_id) => {
+export const getStudentById = async (student_id) => {
   const sql = "SELECT * FROM students WHERE id = ?";
 
   const [rows] = await pool.promise().query(sql, [student_id]);
@@ -31,17 +31,18 @@ export const showStudentProfile = (req, res, next) => {
   let id = req.session.userId;
   
   const query = 'SELECT * FROM students JOIN users ON users.student_id = students.id WHERE users.id =' + id ;
-
+  
   return new Promise(async (resolve) => {
     pool.execute(query, [id])
     .then((data) => {
       //untuk passing data antar middleware
-      res.locals.dataUser = data?.[0]
-      //console.log(res.locals.dataUser)
+      
+      console.log(data?.[0])
+      res.locals.dataUser2 = data?.[0]
       next();
     })
     .catch(() => {
-      res.locals.dataUser = data?.[0]
+      //res.locals.dataUser2 = data?.[0]
       next();
     })
   })

@@ -40,10 +40,6 @@ router.get('/listclassStudent', (req, res) => {
   res.render('student/listclassStudent');
 });
 
-// Route for the profileStudent page
-router.get('/profileStudent', (req, res) => {
-  res.render('student/profileStudent');
-});
 
 // Route for the joinClass page
 router.get('/joinClass', (req, res) => {
@@ -79,7 +75,9 @@ router.get('/profilTeacher', showTeacherProfile, (req, res) => {
 
 // Router for the profileStudent page
 router.get('/profileStudent', showStudentProfile, (req, res) => {
+  // console.log(res.locals.dataUser2);
   res.render('student/profileStudent', {data: res.locals.dataUser2[0]});
+
 });
 
 //editClass

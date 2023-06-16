@@ -73,19 +73,19 @@ export const signupTeacher = async (req, res) => {
 
 export const signupStudent = async (req, res) => {
   try {
-    const { photo, nama, school, number, level, email, password} = req.body;
+    const { nama, school, number, level, email, password} = req.body;
     const hash = bcrypt.hashSync(password, bcrypt.genSaltSync(10));
-    const img = req.file.filename;
-    console.log(req.file)
+    const img = req.file;
+    // console.log(req.file)
     // Insert student account
     const studentData = {
-      photo: img,
+      photo: img.filename,
       full_name: nama,
       school: school, 
       phone_number: number, 
       level: level,
     };
-  console.log(studentData)
+  // console.log(studentData)
     let account
 
     account = await insertStudentAccount(studentData);
