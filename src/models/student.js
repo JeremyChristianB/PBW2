@@ -26,6 +26,25 @@ export const getStudentById = async (student_id) => {
   return rows;
 };
 
+//untuk ganti isi dari profile student 
+export const updateStudentProfile = async (req, res) => {
+  //tidak bisa edit email, jadi hanya yang lain supaya ke tabel students saja 
+  let id = req.session.userId;
+  const { student_id, full_name, email, phone_number, school, level } = req.body;
+  const sql = 'UPDATE students SET full_name = ?, phone_number = ?, school = ?, level = ? WHERE id = ?';
+  const values = [full_name, phone_number, school, level, student_id];
+
+  try {
+    const [result] = await pool.execute(sql, values);
+    return res.redirect('/profileStudent');
+  } catch (error) {
+    throw new Error(`Error inserting student account: ${error}`);
+  }
+  
+};
+
+
+
 export const showStudentProfile = (req, res, next) => {
   //const sql = "SELECT * FROM students WHERE id = ?";
   let id = req.session.userId;

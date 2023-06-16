@@ -382,3 +382,31 @@ th button:hover {
     margin: 4px 2px;
     cursor: pointer;
 }
+
+#buttonSave{
+    border-radius: 4px;
+    background-color: #137C76;
+    border: none;
+    color: white;
+    padding: 20px;
+    text-align: center;
+    text-decoration: none;
+    /* display: inline-block; */
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+}
+
+#buttonCancel{
+    border-radius: 4px;
+    background-color: red;
+    border: none;
+    color: white;
+    padding: 20px;
+    text-align: center;
+    text-decoration: none;
+    /* display: inline-block; */
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+}

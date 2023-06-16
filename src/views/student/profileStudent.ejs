@@ -31,14 +31,34 @@
         <div class="card">
             <img src="/uploads/<%= data.photo %>" alt="Avatar">
             <br>
-            <strong>Name:</strong> <%= data.full_name %><br>
-            <strong>Email:</strong> <%= data.email %><br>
-            <strong>Phone number:</strong> <%= data.phone_number %><br>
-            <strong>Sekolah:</strong> <%= data.school %><br>
-            <strong>Kelas:</strong> <%= data.level %><br>
-            <p><button class="profilebtn" id="profilebtn">Edit Profile</button></p>
+            <form action="/students/edit" id="editProfile" method="post">
+                <input name="student_id" type="hidden" value="<%= data.student_id %>" readonly>
+                <strong>Name:</strong> <input name="full_name" type="text" value="<%= data.full_name %>" readonly><br>
+                <strong>Email:</strong> <input name="email" type="text" value="<%= data.email %>" readonly><br>
+                <strong>Phone number:</strong> <input name="phone_number" type="text" value="<%= data.phone_number %>" readonly><br>
+                <strong>Sekolah:</strong> <input name="school" type="text" value="<%= data.school %>" readonly><br>
+                <strong>Kelas:</strong> <input name="level" type="text" value="<%= data.level %>" readonly><br>
+                <p><button hidden id="buttonSave">Simpan Perubahan</button></p>
+                <p><button hidden type="button" id="buttonCancel" onclick="toggleEdit()">Cancel</button></p>
+            </form>
+            <p><button onclick="toggleEdit()" class="profilebtn" id="profilebtn">Edit Profile</button></p>
           </div>
     </div>
 
 </body>
+<script>
+    function toggleEdit(){
+        var form = document.getElementById("editProfile");
+        var elements = form.elements;
+        for (var i = 0, len = elements.length; i < len; ++i) {
+            elements[i].readOnly = !elements[i].readOnly;
+        }
+        var buttonCancel = document.getElementById("buttonCancel");
+        var buttonSave = document.getElementById("buttonSave");
+        buttonCancel.hidden = !buttonCancel.hidden;
+        buttonSave.hidden = !buttonSave.hidden;
+        //var buttonEdit = document.getElementById("profilebtn");
+        //buttonEdit.hidden = !buttonEdit.hidden;
+    };
+</script>
 </html>
