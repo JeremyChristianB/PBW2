@@ -8,7 +8,6 @@ export const checkAuthentication = (redirectTo = '/login') => (req, res, next) =
     if (redirectTo) {
       return res.redirect(redirectTo);
     }
-
     // Authentication failed
     res.status(401).send('Unauthorized');
   }
@@ -29,7 +28,6 @@ export const checkAuthorization = (roleId, redirectTo = '/') => (req, res, next)
     if (redirectTo) {
       return res.redirect(redirectTo);
     }
-
     // Authentication failed
     res.status(401).send('Unauthorized');
   }
