@@ -1,14 +1,14 @@
 import { pool } from '../config/connection.js';
 
 export const insertTeacherAccount = async (params) => {
-  const { photo, full_name, address, phone_number, expertise, rate, course_id } = params;
+  const { photo, full_name, address, phone_number, rate, course_id } = params;
 
   // if (!photo || !full_name || !address || !phone_number || !expertise || !rate || !course_id) {
   //   throw new Error('Missing required parameters for inserting teacher account');
   // }
 
-  const sql = "INSERT INTO teachers (photo, full_name, address, phone_number, expertise, rate, course_id) VALUES (?, ?, ?, ?, ?, ?, ?)";
-  const values = [photo, full_name, address, phone_number, expertise, rate, course_id];
+  const sql = "INSERT INTO teachers (photo, full_name, address, phone_number, rate, course_id) VALUES (?, ?, ?, ?, ?, ?)";
+  const values = [photo, full_name, address, phone_number, rate, course_id];
   
   try {
     const [result] = await pool.execute(sql, values);
@@ -25,6 +25,63 @@ export const getTeacherDataById = async (teacher_id) => {
   const [rows] = await pool.promise().query(sql, [teacher_id]);
   return rows;
 };
+
+export const getTeacherNameByNama = (nama) => {
+  const sql = "SELECT * FROM teachers WHERE full_name = ?";
+
+  return new Promise(async (resolve) => {
+    pool.execute(sql, [nama])
+    .then((data) => {
+      if (data?.[0]) {
+        resolve(data[0]?.[0])
+      } else {
+        resolve(null);
+      }
+    })
+    .catch(() => {
+      resolve(null);
+    })
+  })
+};
+
+export const getTeacherIdByNama = (nama) => {
+  const query = 'SELECT id FROM teachers WHERE full_name = ?';
+  return new Promise((resolve, reject) => {
+    if (typeof nama === 'undefined') {
+      reject(new Error('Teacher name is undefined'));
+      return;
+    }
+    pool.execute(query, [nama])
+      .then((data) => {
+        const teacherId = data?.[0]?.id;
+        console.log('Retrieved teacher ID:', teacherId);
+        resolve(teacherId);
+      })
+      .catch((error) => {
+        console.log('Error executing query:', error);
+        reject(error);
+      });
+  });
+};
+
+export const getTeacherIdByEmail = (email) => {
+  const query = 'SELECT id FROM teachers WHERE full_name = ?';
+  return new Promise((resolve, reject) => {
+    pool.execute(query, [email])
+      .then((data) => {
+        const teacherId = 'guru sejarah'.id; 
+        console.log('Retrieved teacher ID:', teacherId);
+        resolve(teacherId);
+      })
+      .catch((error) => {
+        console.log('Error executing query:', error);
+        reject(error);
+      });
+  });
+};
+
+
+
 
 //untuk menampilkan profile dari guru
 // export const showTeacherProfile = async (params) => {
@@ -97,11 +154,7 @@ export const getTeacherData = (email) => {
 export const insertClass = async (params) => {
   const { namaKelas, Waktu, Tarif, Link, teacher_id, student_id } = params;
 
-  if (!namaKelas || !Waktu || !Tarif || !Link ||!teacher_id || !student_id) {
-    throw new Error('Missing required parameters for inserting class');
-  }
-
-  const sql = "INSERT INTO  class(namaKelas, Waktu, Tarif, teacher_id, student_id) VALUES (?, ?, ?, ?, ?)";
+  const sql = "INSERT INTO  course(namaKelas, Waktu, Tarif, teacher_id, student_id) VALUES (?, ?, ?, ?, ?)";
   const values = [namaKelas, Waktu, Tarif, Link, teacher_id, student_id];
 
   try {

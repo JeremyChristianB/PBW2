@@ -21,7 +21,9 @@
                 </button>
                 <div class="dropdown-content">
                     <a href="profileTeacher">Profile</a>
-                    <a href="/account/logout">Log Out</a>
+                    <form action="/account/logout" method="post">
+                        <input type="submit" value="Log Out"/>
+                    </form>
                 </div>
             </div>
         </div>
@@ -52,17 +54,23 @@
               <th>Delete</th>
             </tr>
             <tr>
-              <td>CR001</td>
-              <td>10.00-11.00</td>
+              <select name="class_id" id="class_id">
+                <option value="1">Sejarah</option>
+                <option value="1">Matematika</option>
+            </select>
+            <select name="waktu" id="waktu">
+                <option value="1">2023-06-01 10:00:00</option>
+            </select>
+            
               <td>25000</td>
-              <td>TERSEDIA</td>
+              <td>TIDAK TERSEDIA</td>
               <td>
                 <div class="buttonK">
                     <a href="profileStudent">A</a>
                     </div>
               </td>
               <td> <a href="editClass"><button type="submit" name="" id="btn">edit</button></td></a>
-              <td><button type="submit" name="" id="btn">delete</button></td>
+              <td><button type="submit" name="" id="btn"><i class="fa fa-trash" aria-hidden="true"></i></button></td>
             </tr>
             <tr>
                 <td>CR002</td>
@@ -71,20 +79,14 @@
                 <td>TERSEDIA</td>
                 <td></td>
                 <td><button type="submit" name="" id="btn">edit</button></td>
-                <td><button type="submit" name="" id="btn">delete</button></td>
-            </tr>
-            <tr>
-                <td>CR010</td>
-                <td>16.25-17.50</td>
-                <td>25000</td>
-                <td>TERSEDIA</td>
-                <td></td>
-                <td><button type="submit" name="" id="btn">edit</button></td>
-                <td><button type="submit" name="" id="btn">delete</button></td>
-            </tr>
+                <td><button type="submit" name="" id="btn"><i class="fa fa-trash" aria-hidden="true"></i></button></td>
+            </tr>  
           </table>
     </div>
     
+    <script>
+
+    </script>
     
 </body>
 </html>

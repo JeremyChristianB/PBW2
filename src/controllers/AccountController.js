@@ -3,11 +3,14 @@ import express from 'express';
 import CONSTANT from '../config/constant.js';
 import { getConnection } from '../config/connection.js';
 import { insertUserData, getUserData } from '../models/user.js'
-import { insertTeacherAccount} from '../models/teacher.js';
+import { insertTeacherAccount, getTeacherNameByNama , insertClass, getTeacherIdByNama, getTeacherIdByEmail, getTeacherData} from '../models/teacher.js';
 import { insertStudentAccount } from '../models/student.js';
-import { getTeacherDataById } from '../models/teacher.js';
 import { destroySessionAuth, saveSessionAuth} from '../middlewares/session.js';
+import { insertCourseAvailability } from '../models/CourseAvailability.js';
+import { insertCourseMeetings } from '../models/courseMeetings.js';
 import { insertCourse } from '../models/course.js'
+
+
 // import {insertCourseAvailability } from '../models/courseAvailability.js'
 // import { } from '../models/courseMeetings.js'
 
@@ -28,7 +31,7 @@ import { insertCourse } from '../models/course.js'
 
 export const signupTeacher = async (req, res) => {
   try {
-    const { nama, address, number, materi, tarif, email, password, course_id} = req.body;
+    const { nama, address, number, tarif, email, password, course_id} = req.body;
 
     const hash = bcrypt.hashSync(password, bcrypt.genSaltSync(10));
     const img = req.file;
@@ -39,9 +42,8 @@ export const signupTeacher = async (req, res) => {
       full_name: nama,
       address: address, 
       phone_number: number, 
-      expertise: materi,
       rate: tarif,
-      course_id: null
+      course_id: course_id
 
     };
     console.log(teacherData)
@@ -155,33 +157,55 @@ export const logout = async (req, res) => {
   req.session.save(function(err) {
     // session saved
   })    
-  res.redirect('/login'); //kalau ketik account/logout keluarnya ke login lagi
+  res.redirect(301, '/login'); //kalau ketik account/logout keluarnya ke login lagi
   //res.redirect('/homepage');
 }
 
 export const addClass = async (req, res) => {
   try {
-    const { nama, namakelas, waktu, tarif, status } = req.body;
+    const {  waktu, link } = req.body;
 
-    // Insert class
+    const teacherId = req.session.userId
+    console.log(req.session)
+    console.log(teacherId);
 
-    // const id = await getTeacherDataById(teacher_id)
-
-    const classData = {
-      nama: nama,
-
+    const courseMeetingsData = {
+      student_id: null,
+      teacher_id: teacherId,
+      datetime: waktu,
+      link: link,
     };
 
-    Class = await insertClass(classData);
-    console.log('class data berhasil di insert', id)
+    console.log(courseMeetingsData)
 
-    const namaguru = await getTeacherDataById(full_name)
+    let courseMeetings;
 
+    courseMeetings = await insertCourseMeetings(courseMeetingsData);
+    console.log('course data berhasil di insert', courseMeetings);
 
-
-    res.redirect('/listClass');
+    res.redirect('/listClassTeacher');
   } catch (err) {
     console.log(err);
     res.status(500).send('An error occurred while saving the data');
   }
 };
+
+
+// export const getTeacherNameByNama = (nama) => {
+//   const query = 'SELECT full_name FROM teachers WHERE full_name = ?';
+//   return new Promise((resolve, reject) => {
+//     if (typeof nama === 'undefined') {
+//       reject(new Error('Teacher name is undefined'));
+//       return;
+//     }
+//     pool
+//       .execute(query, [nama])
+//       .then((data) => {
+//         const teacherName = data?.[0]?.full_name;
+//         resolve(teacherName);
+//       })
+//       .catch((error) => {
+//         reject(error);
+//       });
+//   });
+// };

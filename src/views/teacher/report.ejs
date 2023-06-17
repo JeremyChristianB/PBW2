@@ -16,12 +16,14 @@
             <a href="openClass" id="addclass">Membuka Kelas</a>
             <a href="report" id="laporan">Laporan</a>
             <div class="dropdown">
-                <button class="dropbtn"> User 
+                <button class="dropbtn"> 
                     <i class="fa fa-caret-down"></i>
                 </button>
                 <div class="dropdown-content">
-                    <a href="profileTeacher">Profile</a>
-                    <a href="/account/logout">Log Out</a>
+                    <a href="profileTeacher">Profile</a> 
+                    <form action="/account/logout" method="post">
+                        <input type="submit" value="Log Out"/>
+                    </form>
                 </div>
             </div>
         </div>

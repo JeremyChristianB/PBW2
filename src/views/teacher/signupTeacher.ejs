@@ -26,13 +26,15 @@
           <form action="/signup-teacher" method="post" enctype="multipart/form-data">
             <!-- <img src="login.png" alt="" style="width:70%"> -->
             <input type="file" id="profilePicture" name="picture">
+            <select id="courseSelect" name="course_id">
+            </select>
             <input type="text" placeholder="Nama Lengkap" name="nama" required />
             <input type="text" placeholder="Email" name="email" required />
             <input type="text" placeholder="Telephone Number" name="number" required />
             <input type="text" placeholder="Address" name="address" required />
             <input type="password" id="password" placeholder="&#xf023;  set password" name="password" required/>
-            <input type="text" placeholder="Materi Kursus" name="materi" required />
             <input type="text" placeholder="Tarif Kursus" name="tarif" required />
+
             <br>
             <br>
             <button type="submit" name="btn_sign_up">
@@ -42,6 +44,26 @@
           <a href="login"><h4 style="color:white">Sudah punya akun? Login Disini!</h4></a>
         </div>
       </div>
+      <script>
+        document.addEventListener('DOMContentLoaded', () => {
+          fetch('/api/courses')
+            .then(response => response.json())
+            .then(data => populateCourseSelect(data.courses))
+            .catch(error => console.error('Error:', error));
+        });
+
+        function populateCourseSelect(courses) {
+          const courseSelect = document.getElementById('courseSelect');
+
+          for (const course of courses) {
+            const option = document.createElement('option');
+            option.value = course.id;
+            option.textContent = course.nama;
+
+            courseSelect.appendChild(option);
+          }
+        }
+      </script>
     </body>
   </html>
 

@@ -10,7 +10,7 @@
 </head>
 <body>
     <div class="header">
-        <a href="homepageGuru" class="logo" id="logo">Belajar Online</a>
+        <a href="homepageTeacher" class="logo" id="logo">Belajar Online</a>
         <div class="header-right">
             <a href="listClassTeacher" id="home">List Kelas</a>
             <a href="openClass" id="course">Membuka Kelas</a>
@@ -21,7 +21,9 @@
                 </button>
                 <div class="dropdown-content">
                     <a href="profileTeacher">Profile</a>
-                    <a href="/account/logout">Log Out</a>
+                    <form action="/account/logout" method="post">
+                        <input type="submit" value="Log Out"/>
+                    </form>
                 </div>
             </div>
         </div>
@@ -30,19 +32,15 @@
     <body class="body">
           <div class="login-page">
             <div class="form">
-              <form action="" method="post">
-                <input type="text" placeholder="Nama kelas" name="namakelas" required />
-                <input type="text" placeholder="Nama guru" name="namaguru" required />
-                <input type="text" placeholder="Waktu" name="waktu" required />
-                <input type="text" placeholder="Tarif" name="tarif" required/>
-                <input type="text" placeholder="Status" name="status" required />
+              <form action="/openclass-teacher" method="post">
+                <input type="text" placeholder="Link" name="link" required />
+                <input type="datetime-local" placeholder="Waktu" name="waktu" required /> 
                 <br>
                 <br>
-                <button type="submit" name="btn submit">
+                <button type="submit" name="btn_submit">
                    Submit
                 </button>
               </form>
-             
             </div>
           </div>
     

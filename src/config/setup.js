@@ -31,11 +31,10 @@ const createCourse = `CREATE TABLE IF NOT EXISTS course(
 
 const createCourseAvailability = `CREATE TABLE IF NOT EXISTS course_availability(
   teacher_id INTEGER,
-  day SMALLINT,
-  time VARCHAR(5),
+  date DATETIME,
 
   FOREIGN KEY (teacher_id) REFERENCES teachers(id),
-  PRIMARY KEY (teacher_id, day, time)
+  PRIMARY KEY (teacher_id, date)
 )`;
 
 const createTeacherQuery = `CREATE TABLE IF NOT EXISTS teachers (
@@ -44,7 +43,6 @@ const createTeacherQuery = `CREATE TABLE IF NOT EXISTS teachers (
   full_name VARCHAR(255),
   address VARCHAR(255),
   phone_number VARCHAR(20),
-  expertise VARCHAR(255),
   rate DECIMAL(10, 2),
   course_id INTEGER,
   FOREIGN KEY (course_id) REFERENCES course(id)
@@ -167,13 +165,13 @@ const insertDummyData = async () => {
 
     // Insert dummy data for the course_availability table
     const insertCourseAvailability = `
-      INSERT INTO course_availability (teacher_id, day, time)
+      INSERT INTO course_availability (teacher_id, date)
       VALUES
-      (1, 1, '09:00'),
-      (2, 2, '14:00'),
-      (3, 3, '11:00'),
-      (4, 4, '10:00'),
-      (5, 5, '13:00')
+      (1, '2023-06-01 10:00:00'),
+      (2, '2023-06-01 10:00:00'),
+      (3, '2023-06-01 10:00:00'),
+      (4, '2023-06-01 10:00:00'),
+      (5, '2023-06-01 10:00:00')
     `;
     await executeQuery(insertCourseAvailability);
     console.log('---- Dummy data inserted for the course_availability table');

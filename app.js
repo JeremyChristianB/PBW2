@@ -11,6 +11,7 @@ import router from './src/routes/index.js';
 import accountRoutes from './src/routes/accountRouter.js';
 import studentRoutes from './src/routes/studentRouter.js';
 import teacherRoutes from './src/routes/teacherRouter.js';
+import apiRoutes from './src/routes/apiRouter.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -36,6 +37,7 @@ app.use('/', router);
 app.use('/', accountRoutes);
 app.use('/', studentRoutes);
 app.use('/', teacherRoutes);
+app.use('/api', apiRoutes);
 
 // ...more router here
 
