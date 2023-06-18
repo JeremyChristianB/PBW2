@@ -15,15 +15,7 @@ export const insertCourseMeetings = async (params) => {
     }
   };
 
-/**
- * Retrieves available schedules for a specific course.
- * @param {Object} params - The parameters for retrieving available schedules.
- * @param {number} params.course_id - The ID of the course to retrieve schedules for.
- * @param {boolean=} params.have_student - Indicates if the student is assigned to the course.
- * @returns {Promise<Array<{ meeting_id: number, datetime: string, link: string, teacher: { teacher_id: number, photo: string, full_name: string, address: string, phone_number: string, rate: number }, course_name: string }>>} - A promise that resolves to an array of schedule objects.
- * Each schedule object contains meeting_id, datetime, link, teacher details, and course_name.
- * @throws {Error} - If there is an error retrieving the available schedules.
- */
+
 export const getAvailableSchedules = async (params) => {
   const { course_id, have_student } = params;
 
