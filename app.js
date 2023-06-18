@@ -62,36 +62,6 @@ app.use((err, req, res, next) => {
   }
 })
 
-// import multer from 'multer';
-
-// // Untuk handle file upload menggunakan library multer
-// const upload = multer({
-//     storage: multer.diskStorage({
-//         destination: (req, file, cb) => {
-//             cb(null, 'public/uploads/')
-//         },
-//         filename: (req, file, cb) => {
-//             const unique = Date.now();
-//             cb(null, `${file.fieldname}_${unique}_${file.originalname.slice(file.originalname.length-5)}`);
-//         }
-//     })
-// });
-
-// // Parse cookie
-// app.use((req, res, next) => {
-//   const cookies = req.headers.cookie;
-//   if(cookies){
-//       req.cookies = cookies.split(';').reduce((r, c) => {
-//           const n = c.split('=');
-//           r[n[0].trim()] = n[1].trim();
-//           return r;
-//       }, {});
-//   }
-//   next();
-// });
-// studentRoutes(app, upload);
-
-
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });

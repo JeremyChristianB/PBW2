@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -8,6 +9,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <title>Daftar Kelas</title>
 </head>
+
 <body>
     <div class="header">
         <a href="Daftarkelas" class="logo" id="logo">Belajar Online</a>
@@ -15,13 +17,13 @@
             <a href="homepageStudent" id="home">Home</a>
             <a href="listClassStudent" id="course">My Class</a>
             <div class="dropdown">
-                <button class="dropbtn"> John Doe 
+                <button class="dropbtn"> John Doe
                     <i class="fa fa-caret-down"></i>
                 </button>
                 <div class="dropdown-content">
                     <a href="profileStudent">Profile</a>
                     <form action="/account/logout" method="post">
-                        <input type="submit" value="Log Out"/>
+                        <input type="submit" value="Log Out" />
                     </form>
                 </div>
             </div>
@@ -36,43 +38,140 @@
     </div>
 
     <div class="content">
-        <input type="text" id="search-input" placeholder="Search course...">
-        <button type="submit" id="search-btn"><i class="fa fa-search"></i></button>
+        <input type="text" id="name-place" placeholder="Search guru...">
+        <button type="submit" id="inputNama"><i class="fa fa-search"></i></button>
     </div>
 
     <div class="tab">
-        <table>
-            <tr>
-              <th>Course</th>
-              <th>Nama Guru</th>
-              <th>Waktu</th>
-              <th>Tarif</th>
-              <th>Lihat</th>
-              <th>Keluar</th>
-            </tr>
-            <tr>
-              <td>CR001</td>
-              <td>    
-                <div class="buttonK">
-                <a href="profileTeacher">A</a>
-                </div>
-            </td>
-              <td>10.00</td>
-              <td>25000</td>
-              <td><button type="submit" name="" id="btn">lihat</button></td>
-              <td><button type="submit" name="" id="btn">keluar</button></td>
-            </tr>
-            <tr>
-                <td>CR002</td>
-                <td></td>
-                <td>10.30</td>
-                <td>50000</td>
-                <td><button type="submit" name="" id="btn">lihat</button></td>
-                <td><button type="submit" name="" id="btn">keluar</button></td>
-            </tr>
-          </table>
+        <table id="courseTable">
+            <thead>
+                <tr>
+                    <th>Course</th>
+                    <th>Nama Guru</th>
+                    <th>Waktu</th>
+                    <th>Tarif</th>
+                    <th>Masuk</th>
+                    <th>Keluar</th>
+                </tr>
+            </thead>
+            <tbody id="courseTableBody"></tbody>
+        </table>
     </div>
-    
-    
+    <script>
+        function fetchData() {
+            const nama = document.getElementById('inputNama').value; // Get the teacher name from user input
+
+            const url = 'your-api-endpoint?nama=' + encodeURIComponent(nama);
+
+            fetch(url)
+                .then(response => response.json())
+                .then(data => {
+                    console.log(data); // Process the response data here
+                })
+                .catch(error => {
+                    console.error(error); // Handle any errors that occur during the request
+                });
+        }
+
+
+
+        function populateTable(data) {
+            const tableBody = document.getElementById('courseTableBody');
+            tableBody.innerHTML = ''; // Clear existing table rows
+
+            for (const course of data) {
+                const row = document.createElement('tr');
+
+                const courseCell = document.createElement('td');
+                courseCell.textContent = course.courseCode;
+                row.appendChild(courseCell);
+
+                const teacherCell = document.createElement('td');
+                if (course.teacherName) {
+                    const teacherLink = document.createElement('a');
+                    teacherLink.href = 'profileTeacher';
+                    teacherLink.textContent = course.teacherName;
+                    const buttonContainer = document.createElement('div');
+                    buttonContainer.className = 'buttonK';
+                    buttonContainer.appendChild(teacherLink);
+                    teacherCell.appendChild(buttonContainer);
+                }
+                row.appendChild(teacherCell);
+
+                const timeCell = document.createElement('td');
+                timeCell.textContent = course.time;
+                row.appendChild(timeCell);
+
+                const rateCell = document.createElement('td');
+                rateCell.textContent = course.rate;
+                row.appendChild(rateCell);
+
+                const viewButtonCell = document.createElement('td');
+                const viewButton = document.createElement('button');
+                viewButton.type = 'submit';
+                viewButton.name = '';
+                viewButton.id = 'btn';
+                viewButton.textContent = 'lihat';
+                viewButtonCell.appendChild(viewButton);
+                row.appendChild(viewButtonCell);
+
+                const leaveButtonCell = document.createElement('td');
+                const leaveButton = document.createElement('button');
+                leaveButton.type = 'submit';
+                leaveButton.name = '';
+                leaveButton.id = 'btn';
+                leaveButton.textContent = 'keluar';
+                leaveButtonCell.appendChild(leaveButton);
+                row.appendChild(leaveButtonCell);
+
+                tableBody.appendChild(row);
+            }
+        }
+
+
+
+        document.getElementById('inputNama').addEventListener('click', fetchData);
+
+    </script>
+
 </body>
+
 </html>
+
+
+
+
+<!-- <html>
+  <select name="class_id" id="class_id">
+    <option value="1">Matematika</option>
+    <option value="2">Matematika</option>
+    <option value="3">Matematika</option>
+    <option value="4">Matematika</option>
+  </select>
+  <select name="teacher_id" id="teacher_id">
+    <option value="1">Budi</option>
+    <option value="2">Mariska</option>
+    <option value="3">Lucy</option>
+  </select>
+  <script>
+    // use fetch to fetch class id to replace class_id selection
+    const fetchClass = async () => {
+      try {
+        const response = await fetch('http://localhost:8000/api/class');
+        const data = await response.json();
+        const classes = data;
+        document.querySelector('#class_id').innerHTML = '';
+        for (let i = 0; i < classes.length; i++) {
+          const option = document.createElement('option');
+          option.value = classes[i].id;
+          option.text = classes[i].name;
+          document.querySelector('#class_id').appendChild(option);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    }
+
+    fetchClass();
+  </script>
+</html> -->

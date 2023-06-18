@@ -2,7 +2,6 @@ import express from 'express';
 import { notForLoggedIn } from '../middlewares/session.js';
 import { showTeacherProfile } from '../models/teacher.js';
 import { showStudentProfile } from '../models/student.js';
-import { getCourses } from '../models/course.js';
 import { checkAuthorization } from '../middlewares/session.js';
 
 const router = express.Router();
@@ -55,8 +54,6 @@ router.get('/listClassTeacher', checkAuthorization(1, '/'), (req, res) => {
   res.render('teacher/listClassTeacher');
 });
 
-//return JSON untuk daftar kelas
-router.get('/courses/:q', getCourses);
 
 // Route for the openClass page
 router.get('/openClass',checkAuthorization(1, '/'), (req, res) => {

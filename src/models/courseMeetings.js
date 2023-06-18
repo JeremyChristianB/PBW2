@@ -68,6 +68,29 @@ export const getAvailableSchedules = async (params) => {
   }
 }
 
+const getSearch = (conn, nama) => {
+  return new Promise((resolve, reject) => {
+    const query = `
+      SELECT cm.id, cm.student_id, cm.datetime, cm.link
+      FROM createCourseMeetings cm
+      JOIN teachers t ON cm.teacher_id = t.id
+      WHERE t.full_name LIKE ?`;
+      
+    const searchTerm = `%${nama}%`;
+      
+    conn.query(query, [searchTerm], (err, result) => {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(result);
+      }
+    });
+  });
+};
+
+
+
+
   // const createCourseMeetings = `CREATE TABLE IF NOT EXISTS course_meetings(
   //   id INTEGER AUTO_INCREMENT PRIMARY KEY,
   //   student_id INTEGER,

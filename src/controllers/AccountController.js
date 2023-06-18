@@ -181,7 +181,17 @@ export const addClass = async (req, res) => {
     let courseMeetings;
 
     courseMeetings = await insertCourseMeetings(courseMeetingsData);
-    console.log('course data berhasil di insert', courseMeetings);
+    console.log('courseMeetings data berhasil di insert', courseMeetings);
+    
+    // const teacherId2 = req.session.userId
+    // const courseAvailabilityData = {
+    //   teacher_id: teacherId2,
+    //   datetime: waktu,
+    // };
+    // console.log(courseAvailabilityData)
+    // let courseAvailability;
+    // courseAvailability = await insertCourseAvailability(courseAvailabilityData)
+    // console.log('courseAvailabilityData berhasil di insert', courseAvailability);
 
     res.redirect('/listClassTeacher');
   } catch (err) {
@@ -209,3 +219,4 @@ export const addClass = async (req, res) => {
 //       });
 //   });
 // };
+
