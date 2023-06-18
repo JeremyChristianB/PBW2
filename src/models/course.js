@@ -19,12 +19,7 @@ export const insertCourse = async (params) => {
     }
   };
 
-/**
- * Retrieves all courses.
- * @returns {Promise<Array<{ id: number, nama: string }>>} - A promise that resolves to an array of course objects.
- * Each course object contains the ID and name of the course.
- * @throws {Error} - If there is an error retrieving the courses.
- */
+
 export const getAllCourses = async () => {
   const sql = `
     SELECT id, nama

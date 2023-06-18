@@ -3,7 +3,7 @@ import express from 'express';
 import CONSTANT from '../config/constant.js';
 import { getConnection } from '../config/connection.js';
 import { insertUserData, getUserData } from '../models/user.js'
-import { insertTeacherAccount, getTeacherNameByNama , insertClass, getTeacherIdByNama, getTeacherIdByEmail, getTeacherData} from '../models/teacher.js';
+import { insertTeacherAccount} from '../models/teacher.js';
 import { insertStudentAccount } from '../models/student.js';
 import { destroySessionAuth, saveSessionAuth} from '../middlewares/session.js';
 import { insertCourseAvailability } from '../models/CourseAvailability.js';

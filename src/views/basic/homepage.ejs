@@ -13,7 +13,9 @@
         <a href="/" class="logo" id="logo">Belajar Online</a>
         <div class="header-right">
             <% if(isLogin){ %>
-                <a href="/account/logout" id="login">Logout</a>
+                <form action="/account/logout" method="post">
+                    <input type="submit" value="Log Out" />
+                </form>
               <% } else{ %>  
                 <a href="login" id="login">Login</a>
              <% } %>
