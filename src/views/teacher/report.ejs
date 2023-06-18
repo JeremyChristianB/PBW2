@@ -1,78 +1,94 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/style/style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <title>Home Guru</title>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/style/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <title>Home Guru</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
+
 <body>
-    <div class="header">
-        <!-- Your header content -->
-    </div>
-
-    <div class="card3" id="body-header3">
-        <br><br><br>
-
-        <div class="drop-down">
-            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                <li><button class="dropdown-item" id="list1">Jumlah Akun</button></li>
-            </div>
+  <div class="header">
+    <a href="homepageTeacher" class="logo" id="logo">Belajar Online</a>
+    <div class="header-right">
+      <a href="listClassTeacher" id="home">List Kelas</a>
+      <a href="openClass" id="course">Membuka Kelas</a>
+      <a href="report" id="course">Laporan</a>
+      <div class="dropdown">
+        <button class="dropbtn"> User
+          <i class="fa fa-caret-down"></i>
+        </button>
+        <div class="dropdown-content">
+          <a href="profileTeacher">Profile</a>
+          <form action="/account/logout" method="post">
+            <input type="submit" value="Log Out" />
+          </form>
         </div>
+      </div>
+    </div>
+  </div>
 
-        <canvas id="myChart"></canvas>
+  <div class="card3" id="body-header3">
+    <br><br><br>
 
+    <div class="drop-down">
+      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+        <li><button class="dropdown-item" id="list1">Jumlah Akun</button></li>
+      </div>
     </div>
 
-    <table id="data-table">
-        <thead>
-            <tr>
-                <th>Role</th>
-                <th>Count</th>
-            </tr>
-        </thead>
-        <tbody></tbody>
-    </table>
+    <canvas id="myChart"></canvas>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', getDataAndRenderTable);
+  </div>
 
-        async function getDataAndRenderTable() {
-          try {
-            const response = await fetch('/chart-data');
-            const chartData = await response.json();
+  <table id="data-table">
+    <thead>
+      <tr>
+        <th>Role</th>
+        <th>Count</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
 
-            renderTable(chartData);
-          } catch (error) {
-            console.error('Error fetching chart data:', error);
-          }
-        }
+  <script>
+    document.addEventListener('DOMContentLoaded', getDataAndRenderTable);
 
-        function renderTable(chartData) {
-          const tableBody = document.querySelector('#data-table tbody');
+    async function getDataAndRenderTable() {
+      try {
+        const response = await fetch('/chart-data');
+        const chartData = await response.json();
 
-          chartData.labels.forEach((label, index) => {
-            const count = chartData.datasets[0].data[index];
+        renderTable(chartData);
+      } catch (error) {
+        console.error('Error fetching chart data:', error);
+      }
+    }
 
-            const row = document.createElement('tr');
-            const roleCell = document.createElement('td');
-            const countCell = document.createElement('td');
+    function renderTable(chartData) {
+      const tableBody = document.querySelector('#data-table tbody');
 
-            roleCell.textContent = label;
-            countCell.textContent = count;
+      chartData.labels.forEach((label, index) => {
+        const count = chartData.datasets[0].data[index];
 
-            row.appendChild(roleCell);
-            row.appendChild(countCell);
+        const row = document.createElement('tr');
+        const roleCell = document.createElement('td');
+        const countCell = document.createElement('td');
 
-            tableBody.appendChild(row);
-          });
-        }
-    </script>
+        roleCell.textContent = label;
+        countCell.textContent = count;
+
+        row.appendChild(roleCell);
+        row.appendChild(countCell);
+
+        tableBody.appendChild(row);
+      });
+    }
+  </script>
 </body>
+
 </html>
-
-
-
