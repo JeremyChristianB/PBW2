@@ -33,9 +33,11 @@ export const checkAuthorization = (roleId, redirectTo = '/') => (req, res, next)
   }
 }
 
-export function saveSessionAuth(req, userId, roleId) {
+export function saveSessionAuth(req, userId, roleId, teacherId, studentId) {
   req.session.auth = true;
   req.session.userId = userId;
+  req.session.teacherId = teacherId;
+  req.session.studentId = studentId;
   req.session.roleId = roleId;
 }
 
@@ -43,4 +45,6 @@ export function destroySessionAuth(req) {
   req.session.auth = false;
   req.session.userId = null;
   req.session.roleId = null;
+  req.session.teacherId = null;
+  req.session.studentId = null;
 }

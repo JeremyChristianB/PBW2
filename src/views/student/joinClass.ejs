@@ -10,12 +10,12 @@
 </head>
 <body>
     <div class="header">
-        <a href="Daftarkelas" class="logo" id="logo">Belajar Online</a>
+        <a href="homepageStudent" class="logo" id="logo">Belajar Online</a>
         <div class="header-right">
             <a href="homepageStudent" id="home">Home</a>
             <a href="listClassStudent" id="course">My Class</a>
             <div class="dropdown">
-                <button class="dropbtn"> John Doe 
+                <button class="dropbtn"> User
                     <i class="fa fa-caret-down"></i>
                 </button>
                 <div class="dropdown-content">
@@ -35,42 +35,94 @@
         </article>
     </div>
 
-    <div class="tab">
-        <table>
-            <tr>
-              <th>Course</th>
-              <th>Nama</th>
-              <th>Waktu</th>
-              <th>Tarif</th>
-              <th>Status</th>
-              <th>Join</th>
-            </tr>
-            <tr>
-              <td>CR001</td>
-              <td>Ana</td>
-              <td>10.00</td>
-              <td>25000</td>
-              <td>TERSEDIA</td>
-              <td><button type="submit" name="" id="btn">join</button></td>
-            </tr>
-            <tr>
-                <td>CR002</td>
-                <td>Bubu</td>
-                <td>10.30</td>
-                <td>50000</td>
-                <td>TERSEDIA</td>
-                <td><button type="submit" name="" id="btn">join</button></td>
-            </tr>
-            <tr>
-                <td>CR010</td>
-                <td>Kina</td>
-                <td>16.25</td>
-                <td>25000</td>
-                <td>TERSEDIA</td>
-                <td><button type="submit" name="" id="btn">Join</button></td>
-            </tr>
-          </table>
+    <div class="content">
+        <input type="text" id="inputNama" placeholder="Search guru...">
+        <button type="submit" onClick="fetchData()"><i class="fa fa-search"></i></button>
     </div>
+
+    <div class="tab">
+        <table id="courseTable">
+            <thead>
+                <tr>
+                    <th>Course</th>
+                    <th>Nama Guru</th>
+                    <th>Waktu</th>
+                    <th>Tarif</th>
+                    <th>Masuk</th>
+                </tr>
+            </thead>
+            <tbody id="courseTableBody"></tbody>
+        </table>
+    </div>
+    <script>
+        function fetchData() {
+            const nama = document.getElementById('inputNama').value; // Get the teacher name from user input
+
+            const url = '/api/search-teacher-by-name?nama=' + encodeURIComponent(nama) + '&all=1';
+            fetch(url)
+                .then(response => response.json())
+                .then(data => {
+                    console.log(data); // Process the response data here
+                    populateTable(data.courses)
+                })
+                .catch(error => {
+                    console.error(error); // Handle any errors that occur during the request
+                });
+        }
+
+
+
+        function populateTable(data) {
+            const tableBody = document.getElementById('courseTableBody');
+            tableBody.innerHTML = ''; // Clear existing table rows
+
+            for (const course of data) {
+                const tr = document.createElement('tr')
+
+                const courseName = document.createElement('td')
+                courseName.innerText = course.course_name
+                tr.append(courseName)
+
+                const teacherName = document.createElement('td')
+                teacherName.innerText = course.teacher.full_name
+                tr.append(teacherName)
+
+                const timeCol = document.createElement('td')
+                timeCol.innerText = course.datetime
+                tr.append(timeCol)
+
+                const feeCol = document.createElement('td')
+                feeCol.innerText = course.teacher.rate
+                tr.append(feeCol)
+
+                const inCol = document.createElement('td')
+                if (!course.student_id) {
+                    const inButton = document.createElement('button')
+                    inButton.innerText = 'Masuk'
+                    inButton.onclick = async () => {
+                        try {
+                            const data = new FormData();
+                            data.append('id', course.meeting_id);
+                            const response = await fetch('/api/join-class', {
+                                method: 'POST',
+                                body: new URLSearchParams(data),
+                            })
+                            alert('Berhasil masuk kelas!')
+                            fetchData()
+                        } catch (error) {
+                            console.error(error)
+                        }
+                    }
+                    inCol.append(inButton)
+                }
+                tr.append(inCol)
+
+                tableBody.append(tr)
+            }
+        }
+
+        fetchData()
+    </script>
     
     
 </body>

@@ -44,7 +44,6 @@ export const updateStudentProfile = async (req, res) => {
 };
 
 
-
 export const showStudentProfile = (req, res, next) => {
   //const sql = "SELECT * FROM students WHERE id = ?";
   let id = req.session.userId;
@@ -66,3 +65,5 @@ export const showStudentProfile = (req, res, next) => {
     })
   })
 };
+
+

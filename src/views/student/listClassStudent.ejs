@@ -7,17 +7,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style/kelas.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <title>Daftar Kelas</title>
+    <title>Kelas Saya</title>
 </head>
 
 <body>
     <div class="header">
-        <a href="Daftarkelas" class="logo" id="logo">Belajar Online</a>
+        <a href="homepageStudent" class="logo" id="logo">Belajar Online</a>
         <div class="header-right">
             <a href="homepageStudent" id="home">Home</a>
             <a href="listClassStudent" id="course">My Class</a>
             <div class="dropdown">
-                <button class="dropbtn"> John Doe
+                <button class="dropbtn"> User
                     <i class="fa fa-caret-down"></i>
                 </button>
                 <div class="dropdown-content">
@@ -38,8 +38,8 @@
     </div>
 
     <div class="content">
-        <input type="text" id="name-place" placeholder="Search guru...">
-        <button type="submit" id="inputNama"><i class="fa fa-search"></i></button>
+        <input type="text" id="inputNama" placeholder="Search guru...">
+        <button type="submit" onClick="fetchData()"><i class="fa fa-search"></i></button>
     </div>
 
     <div class="tab">
@@ -61,12 +61,12 @@
         function fetchData() {
             const nama = document.getElementById('inputNama').value; // Get the teacher name from user input
 
-            const url = 'your-api-endpoint?nama=' + encodeURIComponent(nama);
-
+            const url = '/api/search-teacher-by-name?nama=' + encodeURIComponent(nama);
             fetch(url)
                 .then(response => response.json())
                 .then(data => {
                     console.log(data); // Process the response data here
+                    populateTable(data.courses)
                 })
                 .catch(error => {
                     console.error(error); // Handle any errors that occur during the request
@@ -80,58 +80,53 @@
             tableBody.innerHTML = ''; // Clear existing table rows
 
             for (const course of data) {
-                const row = document.createElement('tr');
+                const tr = document.createElement('tr')
 
-                const courseCell = document.createElement('td');
-                courseCell.textContent = course.courseCode;
-                row.appendChild(courseCell);
+                const courseName = document.createElement('td')
+                courseName.innerText = course.course_name
+                tr.append(courseName)
 
-                const teacherCell = document.createElement('td');
-                if (course.teacherName) {
-                    const teacherLink = document.createElement('a');
-                    teacherLink.href = 'profileTeacher';
-                    teacherLink.textContent = course.teacherName;
-                    const buttonContainer = document.createElement('div');
-                    buttonContainer.className = 'buttonK';
-                    buttonContainer.appendChild(teacherLink);
-                    teacherCell.appendChild(buttonContainer);
+                const teacherName = document.createElement('td')
+                teacherName.innerText = course.teacher.full_name
+                tr.append(teacherName)
+
+                const timeCol = document.createElement('td')
+                timeCol.innerText = course.datetime
+                tr.append(timeCol)
+
+                const feeCol = document.createElement('td')
+                feeCol.innerText = course.teacher.rate
+                tr.append(feeCol)
+
+                const inCol = document.createElement('td')
+                inCol.innerHTML = `<a href=${course.link}>${course.link}</a>` 
+                tr.append(inCol)
+
+                const outCol = document.createElement('td')
+                const outButton = document.createElement('button')
+                outButton.innerText = 'Keluar'
+                outButton.onclick = async () => {
+                    try {
+                        const data = new FormData();
+                        data.append('id', course.meeting_id);
+                        const response = await fetch('/api/exit-class', {
+                            method: 'POST',
+                            body: new URLSearchParams(data),
+                        })
+                        alert('Berhasil keluar kelas!')
+                        fetchData()
+                    } catch (error) {
+                        console.error(error)
+                    }
                 }
-                row.appendChild(teacherCell);
+                outCol.append(outButton)
+                tr.append(outCol)
 
-                const timeCell = document.createElement('td');
-                timeCell.textContent = course.time;
-                row.appendChild(timeCell);
-
-                const rateCell = document.createElement('td');
-                rateCell.textContent = course.rate;
-                row.appendChild(rateCell);
-
-                const viewButtonCell = document.createElement('td');
-                const viewButton = document.createElement('button');
-                viewButton.type = 'submit';
-                viewButton.name = '';
-                viewButton.id = 'btn';
-                viewButton.textContent = 'lihat';
-                viewButtonCell.appendChild(viewButton);
-                row.appendChild(viewButtonCell);
-
-                const leaveButtonCell = document.createElement('td');
-                const leaveButton = document.createElement('button');
-                leaveButton.type = 'submit';
-                leaveButton.name = '';
-                leaveButton.id = 'btn';
-                leaveButton.textContent = 'keluar';
-                leaveButtonCell.appendChild(leaveButton);
-                row.appendChild(leaveButtonCell);
-
-                tableBody.appendChild(row);
+                tableBody.append(tr)
             }
         }
 
-
-
-        document.getElementById('inputNama').addEventListener('click', fetchData);
-
+        fetchData()
     </script>
 
 </body>

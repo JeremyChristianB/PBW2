@@ -16,7 +16,7 @@
             <a href="openClass" id="course">Membuka Kelas</a>
             <a href="report" id="course">Laporan</a>
             <div class="dropdown">
-                <button class="dropbtn"> John Doe 
+                <button class="dropbtn"> User
                     <i class="fa fa-caret-down"></i>
                 </button>
                 <div class="dropdown-content">
@@ -37,55 +37,85 @@
         </article>
     </div>
 
-    <div class="content">
-        <input type="text" id="search-input" placeholder="Search course...">
-        <button type="submit" id="search-btn"><i class="fa fa-search"></i></button>
-    </div>
-
     <div class="tab">
-        <table>
-            <tr>
-              <th>Course</th>
-              <th>Waktu</th>
-              <th>Tarif</th>
-              <th>Status</th>
-              <th>Nama murid</th>
-              <th>Edit</th>
-              <th>Delete</th>
-            </tr>
-            <tr>
-              <select name="class_id" id="class_id">
-                <option value="1">Sejarah</option>
-                <option value="1">Matematika</option>
-            </select>
-            <select name="waktu" id="waktu">
-                <option value="1">2023-06-01 10:00:00</option>
-            </select>
-            
-              <td>25000</td>
-              <td>TIDAK TERSEDIA</td>
-              <td>
-                <div class="buttonK">
-                    <a href="profileStudent">A</a>
-                    </div>
-              </td>
-              <td> <a href="editClass"><button type="submit" name="" id="btn">edit</button></td></a>
-              <td><button type="submit" name="" id="btn"><i class="fa fa-trash" aria-hidden="true"></i></button></td>
-            </tr>
-            <tr>
-                <td>CR002</td>
-                <td>10.30-11.30</td>
-                <td>50000</td>
-                <td>TERSEDIA</td>
-                <td></td>
-                <td><button type="submit" name="" id="btn">edit</button></td>
-                <td><button type="submit" name="" id="btn"><i class="fa fa-trash" aria-hidden="true"></i></button></td>
-            </tr>  
-          </table>
+        <table id="courseTable">
+            <thead>
+                <tr>
+                    <th>Course</th>
+                    <th>Waktu</th>
+                    <th>Tarif</th>
+                    <th>Link</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody id="courseTableBody"></tbody>
+        </table>
     </div>
     
     <script>
+        function fetchData() {
+            const url = '/api/teacher-classes'
+            fetch(url)
+                .then(response => response.json())
+                .then(data => {
+                    console.log(data); // Process the response data here
+                    populateTable(data.courses)
+                })
+                .catch(error => {
+                    console.error(error); // Handle any errors that occur during the request
+                });
+        }
 
+
+
+        function populateTable(data) {
+            const tableBody = document.getElementById('courseTableBody');
+            tableBody.innerHTML = ''; // Clear existing table rows
+
+            for (const course of data) {
+                const tr = document.createElement('tr')
+
+                const courseName = document.createElement('td')
+                courseName.innerText = course.course_name
+                tr.append(courseName)
+
+                const timeCol = document.createElement('td')
+                timeCol.innerText = course.datetime
+                tr.append(timeCol)
+
+                const feeCol = document.createElement('td')
+                feeCol.innerText = course.teacher.rate
+                tr.append(feeCol)
+
+                const linkCol = document.createElement('td')
+                linkCol.innerHTML = `<a href=${course.link}>${course.link}</a>` 
+                tr.append(linkCol)
+
+                const outCol = document.createElement('td')
+                const outButton = document.createElement('button')
+                outButton.innerText = 'Hapus'
+                outButton.onclick = async () => {
+                    try {
+                        const data = new FormData();
+                        data.append('id', course.meeting_id);
+                        const response = await fetch('/api/exit-class', {
+                            method: 'POST',
+                            body: new URLSearchParams(data),
+                        })
+                        alert('Berhasil hapus kelas!')
+                        fetchData()
+                    } catch (error) {
+                        console.error(error)
+                    }
+                }
+                outCol.append(outButton)
+                tr.append(outCol)
+
+                tableBody.append(tr)
+            }
+        }
+
+        fetchData()
     </script>
     
 </body>

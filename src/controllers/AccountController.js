@@ -7,27 +7,8 @@ import { insertTeacherAccount, getTeacherNameByNama , insertClass, getTeacherIdB
 import { insertStudentAccount } from '../models/student.js';
 import { destroySessionAuth, saveSessionAuth} from '../middlewares/session.js';
 import { insertCourseAvailability } from '../models/CourseAvailability.js';
-import { insertCourseMeetings } from '../models/courseMeetings.js';
+import { insertCourseMeetings , searchTeacherByName} from '../models/courseMeetings.js';
 import { insertCourse } from '../models/course.js'
-
-
-// import {insertCourseAvailability } from '../models/courseAvailability.js'
-// import { } from '../models/courseMeetings.js'
-
-// import multer from 'multer';
-
-// // Untuk handle file upload menggunakan library multer
-// export const upload = multer({
-//     storage: multer.diskStorage({
-//         destination: (req, file, cb) => {
-//             cb(null, 'public/uploads/')
-//         },
-//         filename: (req, file, cb) => {
-//             const unique = Date.now();
-//             cb(null, `${file.fieldname}_${unique}_${file.originalname.slice(file.originalname.length-5)}`);
-//         }
-//     })
-// });
 
 export const signupTeacher = async (req, res) => {
   try {
@@ -136,7 +117,7 @@ export const login = async (req, res) => {
       })
     }
 
-    saveSessionAuth(req, user.id, user.role_id);
+    saveSessionAuth(req, user.id, user.role_id, user.teacher_id, user.student_id);
     req.session.save(function(err) {
       // session saved
     })    
@@ -165,7 +146,7 @@ export const addClass = async (req, res) => {
   try {
     const {  waktu, link } = req.body;
 
-    const teacherId = req.session.userId
+    const teacherId = req.session.teacherId
     console.log(req.session)
     console.log(teacherId);
 
@@ -182,16 +163,6 @@ export const addClass = async (req, res) => {
 
     courseMeetings = await insertCourseMeetings(courseMeetingsData);
     console.log('courseMeetings data berhasil di insert', courseMeetings);
-    
-    // const teacherId2 = req.session.userId
-    // const courseAvailabilityData = {
-    //   teacher_id: teacherId2,
-    //   datetime: waktu,
-    // };
-    // console.log(courseAvailabilityData)
-    // let courseAvailability;
-    // courseAvailability = await insertCourseAvailability(courseAvailabilityData)
-    // console.log('courseAvailabilityData berhasil di insert', courseAvailability);
 
     res.redirect('/listClassTeacher');
   } catch (err) {
@@ -201,22 +172,32 @@ export const addClass = async (req, res) => {
 };
 
 
-// export const getTeacherNameByNama = (nama) => {
-//   const query = 'SELECT full_name FROM teachers WHERE full_name = ?';
-//   return new Promise((resolve, reject) => {
-//     if (typeof nama === 'undefined') {
-//       reject(new Error('Teacher name is undefined'));
-//       return;
-//     }
-//     pool
-//       .execute(query, [nama])
-//       .then((data) => {
-//         const teacherName = data?.[0]?.full_name;
-//         resolve(teacherName);
-//       })
-//       .catch((error) => {
-//         reject(error);
-//       });
-//   });
-// };
 
+
+export const searchTeacherNameHandler = async (req, res, next) => {
+  try {
+    const name = req.query.nama;
+    const queryAll = parseInt(req.query?.all || '0') === 1;
+    const student_id = req.session.studentId;
+    const data = await searchTeacherByName(name || '', !queryAll ? student_id : '')
+    res.json({
+      courses: data,
+    })
+  } catch (error) {
+    console.log(error)
+    next(error)
+  }
+}
+
+export const getTeacherClassesHandler = async (req, res, next) => {
+  try {
+    const teacher_id = req.session.teacherId;
+    const data = await searchTeacherByName('', '', teacher_id)
+    res.json({
+      courses: data,
+    })
+  } catch (error) {
+    console.log(error)
+    next(error)
+  }
+}

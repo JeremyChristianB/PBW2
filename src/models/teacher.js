@@ -118,9 +118,9 @@ export const showTeacherProfile = (req, res, next) => {
 export const updateTeacherProfile = async (req, res) => {
   //tidak bisa edit email, jadi hanya yang lain supaya ke tabel teacher saja 
   let id = req.session.userId;
-  const { teacher_id, full_name, email, address, phone_number, expertise, rate } = req.body;
-  const sql = 'UPDATE teachers SET full_name = ?, address = ?, phone_number = ?, expertise = ?, rate = ? WHERE id = ?';
-  const values = [full_name, address, phone_number, expertise, rate, teacher_id];
+  const { teacher_id, full_name, email, address, phone_number, rate } = req.body;
+  const sql = 'UPDATE teachers SET full_name = ?, address = ?, phone_number = ?, rate = ? WHERE id = ?';
+  const values = [full_name, address, phone_number, rate, teacher_id];
   console.log(values)
   try {
     const [result] = await pool.execute(sql, values);

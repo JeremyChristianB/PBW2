@@ -32,61 +32,51 @@
     </div>
   </div>
 
-  <div class="card3" id="body-header3">
-    <br><br><br>
 
-    <div class="drop-down">
-      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-        <li><button class="dropdown-item" id="list1">Jumlah Akun</button></li>
-      </div>
-    </div>
+</div>
+
+
+  <div class="card3" id="body-header3">
+    
+
+    
 
     <canvas id="myChart"></canvas>
 
   </div>
 
-  <table id="data-table">
-    <thead>
-      <tr>
-        <th>Role</th>
-        <th>Count</th>
-      </tr>
-    </thead>
-    <tbody></tbody>
-  </table>
-
   <script>
-    document.addEventListener('DOMContentLoaded', getDataAndRenderTable);
+    document.addEventListener('DOMContentLoaded', getDataAndRenderChart);
 
-    async function getDataAndRenderTable() {
+    async function getDataAndRenderChart() {
       try {
-        const response = await fetch('/chart-data');
+        const response = await fetch('/api/chart-data');
         const chartData = await response.json();
+        console.log(chartData)
 
-        renderTable(chartData);
+        renderChart(chartData.account);
       } catch (error) {
         console.error('Error fetching chart data:', error);
       }
     }
 
-    function renderTable(chartData) {
-      const tableBody = document.querySelector('#data-table tbody');
-
-      chartData.labels.forEach((label, index) => {
-        const count = chartData.datasets[0].data[index];
-
-        const row = document.createElement('tr');
-        const roleCell = document.createElement('td');
-        const countCell = document.createElement('td');
-
-        roleCell.textContent = label;
-        countCell.textContent = count;
-
-        row.appendChild(roleCell);
-        row.appendChild(countCell);
-
-        tableBody.appendChild(row);
+    function renderChart(chartData) {
+      console.log(chartData)
+      const ctx = document.getElementById('myChart').getContext('2d');
+      const userCountChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+          ...chartData,
+        },
+        options: {
+          scales: {
+            y: {
+              beginAtZero: true
+            }
+          },
+        }
       });
+      userCountChart.resize(600, 400);
     }
   </script>
 </body>
